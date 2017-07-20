@@ -1,51 +1,56 @@
-function format(data, indent) {
-  if (_.isNumber(data))
-    return '' + data;
-  else if (_.isBoolean(data))
-    return '' + data;
-  else if (_.isNull(data))
-    return 'null';
-  else if (_.isString(data))
-    return `"${data}"`;
-  else if (_.isArray(data))
-    return formatArray(data, indent);
-  else if (_.isObject(data))
-    return formatObject(data, indent);
+class Formatter {
+  constructor(step = 2, compact = true) {
+    this.step = step;
+    this.compact = compact;
+  }
 
-  return 'I DON\'T KNOW MAN';
-}
+  format(data, indent = 0) {
+    if (_.isNumber(data))
+      return '' + data;
+    else if (_.isBoolean(data))
+      return '' + data;
+    else if (_.isNull(data))
+      return 'null';
+    else if (_.isString(data))
+      return `"${data}"`;
+    else if (_.isArray(data))
+      return this.formatArray(data, indent);
+    else if (_.isObject(data))
+      return this.formatObject(data, indent);
 
-function formatObject(o, indent) {
-  let spaces = _.repeat(' ', indent + INDENT),
-    contents = Object.keys(o).map(key =>
-      spaces + `"${key}": ` + format(o[key], indent + INDENT)
-    );
+    return 'I DON\'T KNOW MAN';
+  }
 
-  if (contents.length > 0) {
-    return '{' + LF
-      + contents.join(',' + LF) + LF
+  formatObject(o, indent) {
+    let spaces = _.repeat(' ', indent + this.step)
+      , contents = Object.keys(o).map(key =>
+        spaces + `"${key}": ` + this.format(o[key], indent + this.step)
+      );
+
+    if (this.compact && contents.length === 0)
+      return '{}';
+
+    return '{' + '\n'
+      + contents.join(',' + '\n') + '\n'
       + _.repeat(' ', indent) + '}';
   }
 
-  return '{}';
-}
+  formatArray(array, indent) {
+    let spaces = _.repeat(' ', indent + this.step);
 
-function formatArray(array, indent) {
-  let spaces = _.repeat(' ', indent + INDENT);
+    if (this.compact && array.length <= 5 && array.every(this.isSimple))
+      return '[' + array.map(x => this.format(x)).join(', ') + ']';
 
-  if (array.length <= 3 && array.every(isSimple)) {
-    return '[' + array.map(x => format(x, 0)).join(', ') + ']';
+    return '[' + '\n'
+      + array.map(x => spaces + this.format(x, indent + this.step)).join(',' + '\n') + '\n'
+      + _.repeat(' ', indent) + ']';
   }
 
-  return '[' + LF
-    + array.map(x => spaces + format(x, indent + INDENT)).join(',' + LF) + LF
-    + _.repeat(' ', indent) + ']';
-}
-
-function isSimple(x) {
-  return _.isBoolean(x)
-    || _.isNumber(x)
-    || _.isNull(x)
-    || _.isString(x) && x.length <= 5
-    || _.isObject(x) && Object.keys(x).length == 0;
+  isSimple(x) {
+    return _.isBoolean(x)
+      || _.isNumber(x)
+      || _.isNull(x)
+      || _.isString(x) && x.length <= 5
+      || _.isObject(x) && Object.keys(x).length == 0;
+  }
 }
