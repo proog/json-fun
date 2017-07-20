@@ -1,17 +1,41 @@
 <!doctype html>
 <html>
-    <head>
-        <title>json.fun</title>
-    </head>
-    <body>
-        <form onsubmit="event.preventDefault(); submitForm(); return false;">
-            <h3>Coming soon: fun with json!</h3>
-            <textarea id="input" placeholder="json here"></textarea>
-            <button type="submit">Format!</button>
-        </form>
-        <pre id="output"></pre>
 
-        <script src="//cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
-        <script src="build/app.js"></script>
-    </body>
+<head>
+  <title>json.fun</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h3>Coming soon: fun with json!</h3>
+    <div class="row" id="formatter">
+      <div class="col-sm-6">
+        <form v-on:submit.prevent="format">
+          <div class="form-group">
+            <textarea class="form-control" rows="20" placeholder="json here" v-model="input"></textarea>
+          </div>
+          <div class="form-group checkbox">
+            <label>
+              <input type="checkbox" v-model="live">
+              Live formatting
+            </label>
+          </div>
+          <button type="submit" class="btn btn-default" v-if="!live">
+            Format!
+          </button>
+        </form>
+      </div>
+      <div class="col-sm-6">
+        <pre v-if="formatted" v-on:click="copyOutput">{{ formatted }}</pre>
+        <textarea id="copy-buffer" style="height: 0;" readonly="readonly" v-model="formatted"></textarea>
+      </div>
+    </div>
+  </div>
+  <script src="src/formatter.js"></script>
+  <script src="src/app.js"></script>
+</body>
+
 </html>
