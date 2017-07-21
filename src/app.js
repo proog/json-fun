@@ -42,7 +42,7 @@ function format() {
     this.error = false;
   }
   catch (e) {
-    this.formatted = makeParseError(e, this.input);
+    this.formatted = makeParseError(e.toString(), this.input);
     this.error = true;
   }
 }
