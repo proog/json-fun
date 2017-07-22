@@ -66,17 +66,23 @@ function copyOutput() {
 }
 
 function makeParseError(error, input) {
-  let match = / at position (\d+)/.exec(error);
+  let match = /SyntaxError: .* at position (\d+)/.exec(error);
 
   if (!match || match.length !== 2)
     return error;
 
   let position = parseInt(match[1])
-    , start = Math.max(0, position - 10)
-    , snippet = input.substr(start, 20)
-    , marker = _.repeat(' ', position - start) + '^';
+    , lastNewline = input.lastIndexOf('\n', position - 1)
+    , nextNewline = input.indexOf('\n', position)
+    , start = Math.max(lastNewline > -1 ? lastNewline + 1 : 0, position - 20)
+    , end = Math.min(nextNewline > -1 ? nextNewline : input.length, position + 20)
+    , snippet = input.substring(start, end)
+    , line = (input.substring(0, position).match(/\n/g) || []).length + 1
+    , col = position - (lastNewline > -1 ? lastNewline : 0) + 1
+    , markerIndent = ' '.repeat(position - start);
 
-  return error + '\n\n'
+  return `${error}\n\n`
     + snippet + '\n'
-    + (_.includes(snippet, '\n') ? '' : marker);
+    + markerIndent + '^\n'
+    + markerIndent + `(line ${line}, col ${col})`;
 }
