@@ -78,7 +78,7 @@ function makeParseError(error, input) {
     , end = Math.min(nextNewline > -1 ? nextNewline : input.length, position + 20)
     , snippet = input.substring(start, end)
     , line = (input.substring(0, position).match(/\n/g) || []).length + 1
-    , col = position - (lastNewline > -1 ? lastNewline : 0) + 1
+    , col = position - (lastNewline > -1 ? lastNewline : 0)
     , markerIndent = _.repeat(' ', position - start);
 
   return `${error}\n\n`
