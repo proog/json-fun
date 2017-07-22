@@ -1,0 +1,6 @@
+{
+    "typeAcquisition": {
+        "enable": true,
+        "include": ["lodash", "vue"]
+    }
+}
