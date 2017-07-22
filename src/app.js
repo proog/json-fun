@@ -9,6 +9,7 @@ let app = new Vue({
     error: false,
     formatter: 'native'
   },
+  mounted: focusInput,
   watch: {
     input: watcher,
     indent: watcher,
@@ -21,6 +22,10 @@ let app = new Vue({
     copyOutput: copyOutput
   }
 });
+
+function focusInput() {
+  this.$refs.input.focus();
+}
 
 function watcher() {
   if (this.live)
@@ -56,13 +61,13 @@ function formatCustom(data, indent, compact) {
 }
 
 function copyOutput() {
-  let copyBuffer = document.getElementById('copy-buffer');
+  let buffer = this.$refs.copyBuffer;
 
-  copyBuffer.style.display = 'block';
-  copyBuffer.select();
+  buffer.style.display = 'block';
+  buffer.select();
   document.execCommand('copy');
-  copyBuffer.blur();
-  copyBuffer.style.display = 'none';
+  buffer.blur();
+  buffer.style.display = 'none';
 }
 
 function makeParseError(error, input) {
