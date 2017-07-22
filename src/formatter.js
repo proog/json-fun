@@ -4,45 +4,50 @@ class Formatter {
     this.compact = compact;
   }
 
-  format(data, indent = 0) {
-    if (_.isNumber(data))
-      return '' + data;
-    else if (_.isBoolean(data))
-      return '' + data;
-    else if (_.isNull(data))
+  format(value, indent = 0) {
+    if (_.isNull(value))
       return 'null';
-    else if (_.isString(data))
-      return `"${data}"`;
-    else if (_.isArray(data))
-      return this.formatArray(data, indent);
-    else if (_.isObject(data))
-      return this.formatObject(data, indent);
-
-    return 'I DON\'T KNOW MAN';
+    else if (_.isString(value))
+      return `"${value}"`;
+    else if (_.isArray(value))
+      return this.formatArray(value, indent);
+    else if (_.isObject(value))
+      return this.formatObject(value, indent);
+    return _.toString(value);
   }
 
-  formatObject(o, indent) {
-    let spaces = _.repeat(' ', indent + this.step)
-      , contents = Object.keys(o).map(key =>
-        spaces + `"${key}": ` + this.format(o[key], indent + this.step)
-      );
-
-    if (this.compact && contents.length === 0)
+  formatObject(object, indent) {
+    if (_.isEmpty(object))
       return '{}';
 
-    return '{' + '\n'
-      + contents.join(',' + '\n') + '\n'
+    if (this.compact && _.keys(object).length === 1 && _.every(object, this.isSimple)) {
+      let formatted = _.map(object, (value, key) =>
+        `"${key}": ` + this.format(value, indent + this.step)
+      );
+      return '{' + _.head(formatted) + '}';
+    }
+
+    let spaces = _.repeat(' ', indent + this.step)
+      , formatted = _.map(object, (value, key) =>
+        `${spaces}"${key}": ` + this.format(value, indent + this.step)
+      );
+
+    return '{\n'
+      + _.join(formatted, ',\n') + '\n'
       + _.repeat(' ', indent) + '}';
   }
 
   formatArray(array, indent) {
+    if (_.isEmpty(array))
+      return '[]';
+
+    if (this.compact && array.length <= 5 && _.every(array, this.isSimple))
+      return '[' + _.join(_.map(array, x => this.format(x)), ', ') + ']';
+
     let spaces = _.repeat(' ', indent + this.step);
 
-    if (this.compact && array.length <= 5 && array.every(this.isSimple))
-      return '[' + array.map(x => this.format(x)).join(', ') + ']';
-
-    return '[' + '\n'
-      + array.map(x => spaces + this.format(x, indent + this.step)).join(',' + '\n') + '\n'
+    return '[\n'
+      + _.join(_.map(array, x => spaces + this.format(x, indent + this.step)), ',\n') + '\n'
       + _.repeat(' ', indent) + ']';
   }
 
@@ -51,6 +56,7 @@ class Formatter {
       || _.isNumber(x)
       || _.isNull(x)
       || _.isString(x) && x.length <= 5
-      || _.isObject(x) && Object.keys(x).length == 0;
+      || _.isArray(x) && _.isEmpty(x)
+      || _.isObject(x) && _.isEmpty(x);
   }
 }

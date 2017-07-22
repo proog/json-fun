@@ -28,7 +28,7 @@ function watcher() {
 }
 
 function format() {
-  if (this.input.trim() === '') {
+  if (_.trim(this.input) === '') {
     this.formatted = '';
     this.error = false;
     return;
@@ -42,7 +42,7 @@ function format() {
     this.error = false;
   }
   catch (e) {
-    this.formatted = makeParseError(e.toString(), this.input);
+    this.formatted = makeParseError(_.toString(e), this.input);
     this.error = true;
   }
 }
@@ -71,7 +71,7 @@ function makeParseError(error, input) {
   if (!match || match.length !== 2)
     return error;
 
-  let position = parseInt(match[1])
+  let position = _.parseInt(match[1])
     , lastNewline = input.lastIndexOf('\n', position - 1)
     , nextNewline = input.indexOf('\n', position)
     , start = Math.max(lastNewline > -1 ? lastNewline + 1 : 0, position - 20)
@@ -79,7 +79,7 @@ function makeParseError(error, input) {
     , snippet = input.substring(start, end)
     , line = (input.substring(0, position).match(/\n/g) || []).length + 1
     , col = position - (lastNewline > -1 ? lastNewline : 0) + 1
-    , markerIndent = ' '.repeat(position - start);
+    , markerIndent = _.repeat(' ', position - start);
 
   return `${error}\n\n`
     + snippet + '\n'
