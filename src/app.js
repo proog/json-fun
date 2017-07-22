@@ -64,7 +64,7 @@ function makeParseError(error, input) {
     , markerIndent = _.repeat(' ', position - start);
 
   return `${error}\n\n`
-    + snippet + '\n'
-    + markerIndent + '^\n'
-    + markerIndent + `(line ${line}, col ${col})`;
+    + `${snippet}\n`
+    + `${markerIndent}^\n`
+    + `${markerIndent}(line ${line}, col ${col})`;
 }
