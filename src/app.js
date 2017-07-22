@@ -2,72 +2,49 @@ let app = new Vue({
   el: '#formatter',
   data: {
     input: '',
-    formatted: '',
     indent: 2,
-    live: true,
     compact: true,
     error: false,
     formatter: 'native'
   },
-  mounted: focusInput,
-  watch: {
-    input: watcher,
-    indent: watcher,
-    live: watcher,
-    compact: watcher,
-    formatter: watcher
+  mounted: function () {
+    this.$refs.input.focus();
+  },
+  computed: {
+    formatted: function () {
+      if (_.trim(this.input) === '') {
+        this.error = false;
+        return '';
+      }
+
+      try {
+        let data = JSON.parse(this.input);
+        this.error = false;
+        return formatJson(data, this.formatter, this.indent, this.compact);
+      }
+      catch (e) {
+        this.error = true;
+        return makeParseError(_.toString(e), this.input);
+      }
+    }
   },
   methods: {
-    format: format,
-    copyOutput: copyOutput
+    copyOutput: function () {
+      let buffer = this.$refs.copyBuffer;
+
+      buffer.style.display = 'block';
+      buffer.select();
+      document.execCommand('copy');
+      buffer.blur();
+      buffer.style.display = 'none';
+    }
   }
 });
 
-function focusInput() {
-  this.$refs.input.focus();
-}
-
-function watcher() {
-  if (this.live)
-    this.format();
-}
-
-function format() {
-  if (_.trim(this.input) === '') {
-    this.formatted = '';
-    this.error = false;
-    return;
-  }
-
-  try {
-    let data = JSON.parse(this.input);
-    this.formatted = this.formatter === 'custom'
-      ? formatCustom(data, this.indent, this.compact)
-      : formatNative(data, this.indent);
-    this.error = false;
-  }
-  catch (e) {
-    this.formatted = makeParseError(_.toString(e), this.input);
-    this.error = true;
-  }
-}
-
-function formatNative(data, indent) {
-  return JSON.stringify(data, null, _.repeat(' ', indent));
-}
-
-function formatCustom(data, indent, compact) {
-  return new Formatter(indent, compact).format(data);
-}
-
-function copyOutput() {
-  let buffer = this.$refs.copyBuffer;
-
-  buffer.style.display = 'block';
-  buffer.select();
-  document.execCommand('copy');
-  buffer.blur();
-  buffer.style.display = 'none';
+function formatJson(data, formatter, indent, compact) {
+  return formatter === 'custom'
+    ? new Formatter(indent, compact).format(data)
+    : JSON.stringify(data, null, _.repeat(' ', indent));
 }
 
 function makeParseError(error, input) {
