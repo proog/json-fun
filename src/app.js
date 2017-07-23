@@ -1,14 +1,11 @@
 let app = new Vue({
-  el: '#formatter',
+  el: '#json-formatter',
   data: {
     input: '',
     indent: 2,
     compact: true,
     error: false,
     formatter: 'native'
-  },
-  mounted: function () {
-    this.$refs.input.focus();
   },
   computed: {
     formatted: function () {
@@ -38,7 +35,10 @@ let app = new Vue({
       buffer.blur();
       buffer.style.display = 'none';
     }
-  }
+  },
+  mounted: function () {
+    this.$refs.input.focus();
+  },
 });
 
 function formatJson(data, formatter, indent, compact) {

@@ -11,10 +11,10 @@
 <body>
   <div class="container">
     <h3>Coming soon: fun with json!</h3>
-    <div class="row" id="formatter">
+    <div class="row" id="json-formatter">
       <div class="col-sm-6">
-        <form v-on:submit.prevent="format">
-          <div class="form-group" v-bind:class="{ 'has-error': error }">
+        <form @submit.prevent="format">
+          <div class="form-group" :class="{ 'has-error': error }">
             <textarea class="form-control" rows="16" placeholder="json here" v-model="input" ref="input"></textarea>
           </div>
           <div class="form-group row">
@@ -35,7 +35,7 @@
               </div>
               <div class="checkbox">
                 <label class="checkbox">
-                  <input type="checkbox" v-model="compact" v-bind:disabled="formatter !== 'custom'">
+                  <input type="checkbox" v-model="compact" :disabled="formatter !== 'custom'">
                   Compact simple structures
                 </label>
               </div>
@@ -50,8 +50,8 @@
         </form>
       </div>
       <div class="col-sm-6">
-        <pre v-if="formatted" v-on:click="copyOutput">{{ formatted }}</pre>
-        <textarea ref="copyBuffer" style="display: none;" v-model="formatted"></textarea>
+        <pre v-if="formatted" @click="copyOutput">{{ formatted }}</pre>
+        <textarea style="display: none;" v-model="formatted" ref="copyBuffer"></textarea>
       </div>
     </div>
   </div>
