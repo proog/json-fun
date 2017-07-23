@@ -24,7 +24,7 @@ class Formatter {
       let formatted = _.map(object, (value, key) =>
         `"${key}": ` + this.format(value, indent + this.step)
       );
-      return '{' + _.head(formatted) + '}';
+      return '{ ' + _.head(formatted) + ' }';
     }
 
     let spaces = _.repeat(' ', indent + this.step)
@@ -42,7 +42,7 @@ class Formatter {
       return '[]';
 
     if (this.compact && array.length <= 5 && _.every(array, this.isSimple))
-      return '[' + _.join(_.map(array, x => this.format(x)), ', ') + ']';
+      return '[ ' + _.join(_.map(array, x => this.format(x)), ', ') + ' ]';
 
     let spaces = _.repeat(' ', indent + this.step);
 
