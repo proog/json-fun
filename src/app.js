@@ -2,26 +2,26 @@ let app = new Vue({
   el: '#json-formatter',
   data: {
     input: '',
+    hasError: false,
     indent: 2,
-    compact: true,
-    error: false,
-    formatter: 'native'
+    formatter: 'native',
+    compact: true
   },
   computed: {
     formatted: function () {
       if (_.trim(this.input) === '') {
-        this.error = false;
+        this.hasError = false;
         return '';
       }
 
       try {
         let data = JSON.parse(this.input);
-        this.error = false;
+        this.hasError = false;
         return formatJson(data, this.formatter, this.indent, this.compact);
       }
       catch (e) {
-        this.error = true;
-        return makeParseError(_.toString(e), this.input);
+        this.hasError = true;
+        return formatError(_.toString(e), this.input);
       }
     }
   },
@@ -47,7 +47,7 @@ function formatJson(data, formatter, indent, compact) {
     : JSON.stringify(data, null, _.repeat(' ', indent));
 }
 
-function makeParseError(error, input) {
+function formatError(error, input) {
   let match = /SyntaxError: [\s\S]* at position (\d+)/.exec(error); // \s\S = dot + newline
 
   if (!match || match.length !== 2)
