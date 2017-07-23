@@ -48,7 +48,7 @@ function formatJson(data, formatter, indent, compact) {
 }
 
 function makeParseError(error, input) {
-  let match = /SyntaxError: .* at position (\d+)/.exec(error);
+  let match = /SyntaxError: [\s\S]* at position (\d+)/.exec(error); // \s\S = dot + newline
 
   if (!match || match.length !== 2)
     return error;
