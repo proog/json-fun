@@ -25,17 +25,6 @@ let app = new Vue({
       }
     }
   },
-  methods: {
-    copyOutput: function () {
-      let buffer = this.$refs.copyBuffer;
-
-      buffer.style.display = 'block';
-      buffer.select();
-      document.execCommand('copy');
-      buffer.blur();
-      buffer.style.display = 'none';
-    }
-  },
   mounted: function () {
     this.$refs.input.focus();
   },

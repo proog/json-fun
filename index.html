@@ -54,13 +54,20 @@
         </form>
       </div>
       <div class="col-sm-6">
-        <pre class="pointer" v-if="formatted" @click="copyOutput"><code>{{ formatted }}</code></pre>
-        <textarea style="display: none;" v-model="formatted" ref="copyBuffer"></textarea>
+        <formatted-output :formatted="formatted"></formatted-output>
       </div>
     </div>
   </div>
 
+  <script type="text/x-template" id="formatted-output">
+    <div>
+      <pre class="pointer" v-if="formatted" @click="copy"><code>{{ formatted }}</code></pre>
+      <textarea style="display: none;" v-model="formatted" ref="buffer"></textarea>
+    </div>
+  </script>
+
   <script src="src/formatter.js"></script>
+  <script src="src/formatted-output.js"></script>
   <script src="src/app.js"></script>
 </body>
 
