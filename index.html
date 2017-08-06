@@ -17,9 +17,9 @@
 
 <body>
   <div class="container-fluid">
-    <h3>Coming soon: fun with json!</h3>
     <div class="row" id="json-formatter">
       <div class="col-sm-4">
+        <h4>Coming soon: fun with json!</h4>
         <form @submit.prevent="format">
           <div class="form-group" :class="{ 'has-error': hasError }">
             <textarea class="form-control" rows="16" placeholder="json here" v-model="input" ref="input"></textarea>
