@@ -3,20 +3,23 @@
 
 <head>
   <title>json.fun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
   <script src="https://cdn.jsdelivr.net/vue/2.3.2/vue.min.js"></script>
   <style>
+    body { padding: 20px; }
     .pointer { cursor: pointer; }
+    .monospace { font-family: monospace; }
   </style>
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <h3>Coming soon: fun with json!</h3>
     <div class="row" id="json-formatter">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <form @submit.prevent="format">
           <div class="form-group" :class="{ 'has-error': hasError }">
             <textarea class="form-control" rows="16" placeholder="json here" v-model="input" ref="input"></textarea>
@@ -53,8 +56,19 @@
           </div>
         </form>
       </div>
-      <div class="col-sm-6">
-        <formatted-output :formatted="formatted"></formatted-output>
+      <div class="col-sm-8">
+        <ul class="nav nav-tabs">
+          <li :class="{ active: tab === 'formatted' }"><a href="" @click.prevent="selectTab('formatted')">Formatted</a></li>
+          <li :class="{ active: tab === 'table' }"><a href="" @click.prevent="selectTab('table')">Table</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane" :class="{ active: tab === 'formatted' }">
+            <formatted-output :formatted="formatted"></formatted-output>
+          </div>
+          <div class="tab-pane" :class="{ active: tab === 'table' }">
+            <table-output :value="parsed"></table-output>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -66,8 +80,36 @@
     </div>
   </script>
 
+  <script type="text/x-template" id="table-output">
+    <table class="table" v-if="items">
+      <thead>
+        <tr>
+          <th></th>
+          <th v-for="key in allKeys">{{ key }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <table-row v-for="(item, index) in items"
+          :item="item"
+          :index="index"
+          :keys="allKeys"></table-row>
+      </tbody>
+    </table>
+  </script>
+
+  <script type="text/x-template" id="table-output-row">
+    <tr>
+      <th>
+        {{ index }}
+        ({{ typeName }}<span v-if="isPrimitive"> = {{ item }}</span>)
+      </th>
+      <value-cell v-for="key in keys" :item="item" :value-key="key"></value-cell>
+    </tr>
+  </script>
+
   <script src="src/formatter.js"></script>
   <script src="src/formatted-output.js"></script>
+  <script src="src/table-output.js"></script>
   <script src="src/app.js"></script>
 </body>
 

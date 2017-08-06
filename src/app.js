@@ -2,27 +2,36 @@ let app = new Vue({
   el: '#json-formatter',
   data: {
     input: '',
+    parsed: undefined,
     hasError: false,
     indent: 2,
     formatter: 'native',
-    compact: true
+    compact: true,
+    tab: 'formatted'
   },
   computed: {
     formatted: function () {
       if (_.trim(this.input) === '') {
+        this.parsed = undefined;
         this.hasError = false;
         return '';
       }
 
       try {
-        let data = JSON.parse(this.input);
+        this.parsed = JSON.parse(this.input);
         this.hasError = false;
-        return formatJson(data, this.formatter, this.indent, this.compact);
+        return formatJson(this.parsed, this.formatter, this.indent, this.compact);
       }
       catch (e) {
+        this.parsed = undefined;
         this.hasError = true;
         return formatError(_.toString(e), this.input);
       }
+    }
+  },
+  methods: {
+    selectTab: function (name) {
+      this.tab = name;
     }
   },
   mounted: function () {
