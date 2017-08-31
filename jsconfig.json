@@ -1,6 +1,6 @@
 {
     "typeAcquisition": {
         "enable": true,
-        "include": ["lodash", "vue"]
+        "include": ["lodash", "vue", "highlight.js"]
     }
 }

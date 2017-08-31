@@ -6,8 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
   <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
   <script src="https://cdn.jsdelivr.net/vue/2.3.2/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <style>
     body { padding: 20px; }
     .pointer { cursor: pointer; }
@@ -22,7 +24,7 @@
         <h4>Coming soon: fun with json!</h4>
         <form @submit.prevent="format">
           <div class="form-group" :class="{ 'has-error': hasError }">
-            <textarea class="form-control" rows="16" placeholder="json here" v-model="input" ref="input"></textarea>
+            <textarea class="form-control monospace" rows="16" placeholder="json here" v-model="input" ref="input"></textarea>
           </div>
           <div class="form-group row">
             <div class="col-sm-6">
@@ -63,7 +65,7 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane" :class="{ active: tab === 'formatted' }">
-            <formatted-output :formatted="formatted"></formatted-output>
+            <formatted-output :formatted="formatted" :error="hasError"></formatted-output>
           </div>
           <div class="tab-pane" :class="{ active: tab === 'table' }">
             <table-output :value="parsed"></table-output>
@@ -75,7 +77,7 @@
 
   <script type="text/x-template" id="formatted-output">
     <div>
-      <pre class="pointer" v-if="formatted" @click="copy"><code>{{ formatted }}</code></pre>
+      <pre class="pointer" v-if="formatted" @click="copy"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
       <textarea style="display: none;" v-model="formatted" ref="buffer"></textarea>
     </div>
   </script>

@@ -1,7 +1,16 @@
 Vue.component('formatted-output', {
   template: '#formatted-output',
   props: {
-    formatted: String
+    formatted: String,
+    error: Boolean
+  },
+  computed: {
+    highlighted: function () {
+      if (this.error)
+        return this.formatted;
+
+      return hljs.highlight('json', this.formatted).value;
+    }
   },
   methods: {
     copy: function () {
