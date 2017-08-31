@@ -22,7 +22,7 @@
 <body class="h-100 py-3">
   <div class="container-fluid h-100">
     <div class="row h-100" id="json-formatter">
-      <div class="col-4">
+      <div class="col-4 h-100">
         <div class="form-group h-100">
           <textarea class="form-control monospace h-100"
                     :class="{ 'is-invalid': hasError }"
@@ -31,14 +31,43 @@
                     ref="input"></textarea>
         </div>
       </div>
-      <div class="col-8">
-        <formatted-output :formatted="formatted" :error="hasError"></formatted-output>
+      <div class="col-8 h-100">
+        <formatted-output :formatted="formatted"
+                          :error="hasError"
+                          v-if="formatted">
+        </formatted-output>
+        <div class="px-5 py-3" v-else>
+          <p>
+            <strong>JSON</strong> (JavaScript Object Notation) is a lightweight data-interchange format.
+            It is easy for humans to read and write.
+            It is easy for machines to parse and generate.
+            It is based on a subset of the JavaScript Programming Language, Standard ECMA-262 3rd Edition - December 1999.
+            JSON is a text format that is completely language independent but uses conventions that are familiar to programmers of the C-family of languages, including C, C++, C#, Java, JavaScript, Perl, Python, and many others.
+            These properties make JSON an ideal data-interchange language.
+          </p>
+          <p>
+            JSON is built on two structures:
+          </p>
+          <ul>
+            <li>A collection of name/value pairs. In various languages, this is realized as an object, record, struct, dictionary, hash table, keyed list, or associative array.</li>
+            <li>An ordered list of values. In most languages, this is realized as an array, vector, list, or sequence.</li>
+          </ul>
+          <p>
+            These are universal data structures.
+            Virtually all modern programming languages support them in one form or another.
+            It makes sense that a data format that is interchangeable with programming languages also be based on these structures.
+          </p>
+          <p class="text-right">
+            <span class="text-secondary">—</span>
+            <a href="http://json.org" target="_blank">json.org</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
 
   <script type="text/x-template" id="formatted-output">
-    <div class="card h-100 pointer" v-if="formatted" @click="copy">
+    <div class="card h-100 pointer" @click="copy">
       <div class="card-body h-100 relative">
         <pre class="h-100"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
         <textarea style="display: none;" v-model="formatted" ref="buffer"></textarea>
