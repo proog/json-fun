@@ -4,6 +4,9 @@ Vue.component('formatted-output', {
     formatted: String,
     error: Boolean
   },
+  data: function () {
+    return { notification: 'click to copy' };
+  },
   computed: {
     highlighted: function () {
       if (this.error)
@@ -21,6 +24,11 @@ Vue.component('formatted-output', {
       document.execCommand('copy');
       buffer.blur();
       buffer.style.display = 'none';
+
+      this.notification = 'copied!';
+      _.delay(() => {
+        this.notification = 'click to copy';
+      }, 1500);
     }
   }
 });

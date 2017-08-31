@@ -1,84 +1,49 @@
 <!doctype html>
-<html>
+<html class="h-100">
 
 <head>
-  <title>json.fun</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>json.fun | Fun with JSON</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
   <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
   <script src="https://cdn.jsdelivr.net/vue/2.3.2/vue.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <style>
-    body { padding: 20px; }
     .pointer { cursor: pointer; }
     .monospace { font-family: monospace; }
+    .relative { position: relative; }
+    .top-right { position: absolute; top: 0; right: 0; }
   </style>
 </head>
 
-<body>
-  <div class="container-fluid">
-    <div class="row" id="json-formatter">
-      <div class="col-sm-4">
-        <h4>Coming soon: fun with json!</h4>
-        <form @submit.prevent="format">
-          <div class="form-group" :class="{ 'has-error': hasError }">
-            <textarea class="form-control monospace" rows="16" placeholder="json here" v-model="input" ref="input"></textarea>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-6">
-              <div class="radio">
-                <label>
-                  <input type="radio" value="native" v-model="formatter">
-                  Native formatter
-                </label>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="radio">
-                <label>
-                  <input type="radio" value="custom" v-model="formatter">
-                  Custom formatter
-                </label>
-              </div>
-              <div class="checkbox">
-                <label class="checkbox">
-                  <input type="checkbox" v-model="compact" :disabled="formatter !== 'custom'">
-                  Compact simple structures
-                </label>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="form-group form-inline">
-            Indent by
-            <input type="number" class="form-control" min="0" v-model.number="indent">
-            spaces
-          </div>
-        </form>
-      </div>
-      <div class="col-sm-8">
-        <ul class="nav nav-tabs">
-          <li :class="{ active: tab === 'formatted' }"><a href="" @click.prevent="selectTab('formatted')">Formatted</a></li>
-          <li :class="{ active: tab === 'table' }"><a href="" @click.prevent="selectTab('table')">Table</a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane" :class="{ active: tab === 'formatted' }">
-            <formatted-output :formatted="formatted" :error="hasError"></formatted-output>
-          </div>
-          <div class="tab-pane" :class="{ active: tab === 'table' }">
-            <table-output :value="parsed"></table-output>
-          </div>
+<body class="h-100 py-3">
+  <div class="container-fluid h-100">
+    <div class="row h-100" id="json-formatter">
+      <div class="col-4">
+        <div class="form-group h-100">
+          <textarea class="form-control monospace h-100"
+                    :class="{ 'is-invalid': hasError }"
+                    placeholder="json here"
+                    v-model="input"
+                    ref="input"></textarea>
         </div>
+      </div>
+      <div class="col-8">
+        <formatted-output :formatted="formatted" :error="hasError"></formatted-output>
       </div>
     </div>
   </div>
 
   <script type="text/x-template" id="formatted-output">
-    <div>
-      <pre class="pointer" v-if="formatted" @click="copy"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
-      <textarea style="display: none;" v-model="formatted" ref="buffer"></textarea>
+    <div class="card h-100 pointer" v-if="formatted" @click="copy">
+      <div class="card-body h-100 relative">
+        <pre class="h-100"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
+        <textarea style="display: none;" v-model="formatted" ref="buffer"></textarea>
+        <div class="top-right mr-3 mt-3">{{ notification }}</div>
+      </div>
     </div>
   </script>
 
