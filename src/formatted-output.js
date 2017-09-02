@@ -5,7 +5,10 @@ Vue.component('formatted-output', {
     error: Boolean
   },
   data: function () {
-    return { notification: 'click to copy' };
+    return {
+      showNotification: false,
+      notification: 'click to copy'
+    };
   },
   computed: {
     highlighted: function () {
