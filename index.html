@@ -13,7 +13,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <style>
     .pointer { cursor: pointer; }
-    .monospace { font-family: monospace; }
+    .monospace { font-size: 0.8em; font-family: Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; }
     .relative { position: relative; }
     .top-right { position: absolute; top: 0; right: 0; }
   </style>
@@ -74,7 +74,7 @@
            @mouseout="showNotification = false"
            @click="copy">
         <div class="card-body h-100 relative">
-          <pre class="h-100"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
+          <pre class="h-100 monospace"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
           <textarea style="display: none;" v-model="formatted" ref="buffer"></textarea>
           <div class="top-right mr-5 mt-3 fade" :class="{ 'show': showNotification }">
             {{ notification }}
