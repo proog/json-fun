@@ -22,7 +22,7 @@
 <body class="h-100">
   <div class="container-fluid h-100">
     <div class="row h-100" id="json-formatter">
-      <div class="col-md-4 col-12 py-3 pr-md-2 pr-3 h-100 d-flex flex-column">
+      <div class="col-md-4 col-12 py-3 pr-md-2 h-100 d-flex flex-column">
         <textarea class="form-control monospace h-100"
                   :class="{ 'is-invalid': hasError }"
                   placeholder="json here"
@@ -32,12 +32,12 @@
           {{ input.length }} characters
         </div>
       </div>
-      <div class="col-md-8 col-12 py-3 pl-md-2 pl-3 h-100">
+      <div class="col-md-8 col-12 py-3 pl-md-2 h-100">
         <formatted-output :formatted="formatted"
                           :error="hasError"
                           v-if="formatted">
         </formatted-output>
-        <div class="px-5 py-3" v-else>
+        <div class="px-md-5 py-3" v-else>
           <p>
             <strong>JSON</strong> (JavaScript Object Notation) is a lightweight data-interchange format.
             It is easy for humans to read and write.
