@@ -76,7 +76,7 @@
         <div class="card-body h-100 relative">
           <pre class="h-100 monospace"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
           <textarea style="display: none;" v-model="formatted" ref="buffer"></textarea>
-          <div class="top-right mr-5 mt-3 fade" :class="{ 'show': showNotification }">
+          <div class="top-right mr-5 mt-3 fade d-none d-md-block" :class="{ 'show': showNotification }">
             {{ notification }}
           </div>
         </div>
