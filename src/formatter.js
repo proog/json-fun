@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 class Formatter {
   constructor(step = 2, compact = true) {
     this.step = step;

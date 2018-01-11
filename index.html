@@ -5,18 +5,9 @@
   <title>json.fun | Fun with JSON</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/xcode.min.css">
-  <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/vue/2.3.2/vue.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <style>
-    .pointer { cursor: pointer; }
-    .monospace { font-size: 0.8em; font-family: Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; }
-    .relative { position: relative; }
-    .top-right { position: absolute; top: 0; right: 0; }
-  </style>
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body class="h-100">
@@ -87,35 +78,6 @@
     </div>
   </script>
 
-  <script type="text/x-template" id="table-output">
-    <table class="table" v-if="items">
-      <thead>
-        <tr>
-          <th></th>
-          <th v-for="key in allKeys">{{ key }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <table-row v-for="(item, index) in items"
-          :item="item"
-          :index="index"
-          :keys="allKeys"></table-row>
-      </tbody>
-    </table>
-  </script>
-
-  <script type="text/x-template" id="table-output-row">
-    <tr>
-      <th>
-        {{ index }}
-        ({{ typeName }}<span v-if="isPrimitive"> = {{ item }}</span>)
-      </th>
-      <value-cell v-for="key in keys" :item="item" :value-key="key"></value-cell>
-    </tr>
-  </script>
-
-  <script src="src/formatter.js"></script>
-  <script src="src/formatted-output.js"></script>
   <script src="src/app.js"></script>
 </body>
 

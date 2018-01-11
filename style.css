@@ -1,0 +1,17 @@
+@import "highlight.js/styles/xcode.css";
+
+.pointer {
+    cursor: pointer;
+}
+.monospace {
+    font-size: 0.8em;
+    font-family: Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+.relative {
+    position: relative;
+}
+.top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

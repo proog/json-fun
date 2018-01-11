@@ -1,3 +1,8 @@
+import Vue from 'vue/dist/vue.esm.js';
+import _ from 'lodash';
+import './formatted-output';
+import './formatter';
+
 let app = new Vue({
   el: '#json-formatter',
   data: {

@@ -1,0 +1,27 @@
+{
+  "name": "json-fun",
+  "version": "1.0.0",
+  "description": "Fun with JSON",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html --public-url ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/proog/json-fun.git"
+  },
+  "author": "proog",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/proog/json-fun/issues"
+  },
+  "homepage": "https://github.com/proog/json-fun#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.4.1"
+  },
+  "dependencies": {
+    "highlight.js": "^9.12.0",
+    "lodash": "^4.17.4",
+    "vue": "^2.5.13"
+  }
+}
