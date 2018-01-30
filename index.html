@@ -62,8 +62,7 @@
     <div class="h-100 d-flex flex-column">
       <div class="card h-100">
         <div class="card-body h-100 relative">
-          <pre class="h-100 monospace"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
-          <textarea style="display: none;" v-model="formatted" ref="buffer"></textarea>
+          <pre class="h-100 monospace" ref="buffer"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
         </div>
       </div>
       <div class="mt-2 text-center">

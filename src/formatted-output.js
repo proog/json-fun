@@ -26,13 +26,8 @@ Vue.component('formatted-output', {
   },
   methods: {
     copy() {
-      let buffer = this.$refs.buffer
-
-      buffer.style.display = 'block'
-      buffer.select()
+      window.getSelection().selectAllChildren(this.$refs.buffer)
       document.execCommand('copy')
-      buffer.blur()
-      buffer.style.display = 'none'
 
       this.notification = 'Copied'
       _.delay(() => {
