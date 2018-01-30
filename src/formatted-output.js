@@ -1,9 +1,9 @@
-import Vue from 'vue/dist/vue.esm.js';
-import _ from 'lodash';
-import hljs from 'highlight.js/lib/highlight.js';
-import hljson from 'highlight.js/lib/languages/json.js';
+import Vue from 'vue/dist/vue.esm.js'
+import _ from 'lodash'
+import hljs from 'highlight.js/lib/highlight.js'
+import hljson from 'highlight.js/lib/languages/json.js'
 
-hljs.registerLanguage('json', hljson);
+hljs.registerLanguage('json', hljson)
 
 Vue.component('formatted-output', {
   template: '#formatted-output',
@@ -11,34 +11,34 @@ Vue.component('formatted-output', {
     formatted: String,
     error: Boolean
   },
-  data: function () {
+  data() {
     return {
       showNotification: false,
       notification: 'click to copy'
-    };
+    }
   },
   computed: {
-    highlighted: function () {
+    highlighted() {
       if (this.error)
-        return this.formatted;
+        return this.formatted
 
-      return hljs.highlight('json', this.formatted).value;
+      return hljs.highlight('json', this.formatted).value
     }
   },
   methods: {
-    copy: function () {
-      let buffer = this.$refs.buffer;
+    copy() {
+      let buffer = this.$refs.buffer
 
-      buffer.style.display = 'block';
-      buffer.select();
-      document.execCommand('copy');
-      buffer.blur();
-      buffer.style.display = 'none';
+      buffer.style.display = 'block'
+      buffer.select()
+      document.execCommand('copy')
+      buffer.blur()
+      buffer.style.display = 'none'
 
-      this.notification = 'copied!';
+      this.notification = 'copied!'
       _.delay(() => {
-        this.notification = 'click to copy';
-      }, 1500);
+        this.notification = 'click to copy'
+      }, 1500)
     }
   }
-});
+})
