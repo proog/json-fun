@@ -13,8 +13,7 @@ Vue.component('formatted-output', {
   },
   data() {
     return {
-      showNotification: false,
-      notification: 'click to copy'
+      notification: 'Copy'
     }
   },
   computed: {
@@ -35,9 +34,9 @@ Vue.component('formatted-output', {
       buffer.blur()
       buffer.style.display = 'none'
 
-      this.notification = 'copied!'
+      this.notification = 'Copied'
       _.delay(() => {
-        this.notification = 'click to copy'
+        this.notification = 'Copy'
       }, 1500)
     }
   }
