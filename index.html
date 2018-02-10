@@ -27,8 +27,10 @@
           </div>
         </div>
         <div class="col-md-8 col-12 py-3 pl-md-2 h-100">
-          <formatted-output v-if="formatted" :formatted="formatted" :error="hasError"></formatted-output>
-          <json-info v-else></json-info>
+          <transition mode="out-in">
+            <formatted-output v-if="formatted" :formatted="formatted" :error="hasError"></formatted-output>
+            <json-info v-else></json-info>
+          </transition>
         </div>
       </div>
     </div>
