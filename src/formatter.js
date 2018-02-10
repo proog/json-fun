@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-class Formatter {
+export default class Formatter {
   constructor(step = 2, compact = true) {
     this.step = step
     this.compact = compact

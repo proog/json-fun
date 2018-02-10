@@ -1,18 +1,25 @@
 import Vue from 'vue/dist/vue.esm.js'
 import _ from 'lodash'
-import './formatted-output'
-import './formatter'
+import hljs from 'highlight.js/lib/highlight.js'
+import hljson from 'highlight.js/lib/languages/json.js'
+import FormattedOutput from './formatted-output'
+import Formatter from './formatter'
+import JsonInfo from './json-info'
 
-let app = new Vue({
-  el: '#json-formatter',
-  data: {
-    input: '',
-    parsed: undefined,
-    hasError: false,
-    indent: 2,
-    formatter: 'native',
-    compact: true,
-    tab: 'formatted'
+hljs.registerLanguage('json', hljson)
+
+const App = {
+  template: '#app-template',
+  data() {
+    return {
+      input: '',
+      parsed: undefined,
+      hasError: false,
+      indent: 2,
+      formatter: 'native',
+      compact: true,
+      tab: 'formatted'
+    }
   },
   computed: {
     formatted() {
@@ -41,7 +48,16 @@ let app = new Vue({
   },
   mounted() {
     this.$refs.input.focus()
+  },
+  components: {
+    'json-info': JsonInfo,
+    'formatted-output': FormattedOutput
   }
+}
+
+new Vue({
+  el: '#app',
+  render: h => h(App)
 })
 
 function formatJson(data, formatter, indent, compact) {

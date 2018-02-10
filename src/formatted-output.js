@@ -1,11 +1,7 @@
-import Vue from 'vue/dist/vue.esm.js'
 import _ from 'lodash'
 import hljs from 'highlight.js/lib/highlight.js'
-import hljson from 'highlight.js/lib/languages/json.js'
 
-hljs.registerLanguage('json', hljson)
-
-Vue.component('formatted-output', {
+export default {
   template: '#formatted-output',
   props: {
     formatted: String,
@@ -35,4 +31,4 @@ Vue.component('formatted-output', {
       }, 1500)
     }
   }
-})
+}
