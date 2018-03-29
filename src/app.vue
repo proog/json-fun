@@ -1,15 +1,33 @@
-import Vue from 'vue/dist/vue.esm.js'
+<template>
+<div class="container-fluid h-100">
+  <div class="row h-100">
+    <div class="col-md-4 col-12 py-3 pr-md-2 h-100 d-flex flex-column">
+      <textarea class="form-control monospace h-100"
+                :class="{ 'is-invalid': hasError }"
+                placeholder="json here"
+                v-model="input"
+                ref="input"></textarea>
+      <div class="mt-2 text-center">
+        {{ input.length }} characters
+      </div>
+    </div>
+    <div class="col-md-8 col-12 py-3 pl-md-2 h-100">
+      <transition mode="out-in">
+        <formatted-output v-if="formatted" :formatted="formatted" :error="hasError"></formatted-output>
+        <json-info v-else></json-info>
+      </transition>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
 import _ from 'lodash'
-import hljs from 'highlight.js/lib/highlight.js'
-import hljson from 'highlight.js/lib/languages/json.js'
-import FormattedOutput from './formatted-output'
+import FormattedOutput from './FormattedOutput.vue'
+import JsonInfo from './JsonInfo.vue'
 import Formatter from './formatter'
-import JsonInfo from './json-info'
 
-hljs.registerLanguage('json', hljson)
-
-const App = {
-  template: '#app-template',
+export default {
   data() {
     return {
       input: '',
@@ -55,11 +73,6 @@ const App = {
   }
 }
 
-new Vue({
-  el: '#app',
-  render: h => h(App)
-})
-
 function formatJson(data, formatter, indent, compact) {
   return formatter === 'custom'
     ? new Formatter(indent, compact).format(data)
@@ -87,3 +100,4 @@ function formatError(error, input) {
     + `${markerIndent}^\n`
     + `${markerIndent}(line ${line}, col ${col})`
 }
+</script>

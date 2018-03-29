@@ -1,3 +1,19 @@
+<template>
+<div class="h-100 d-flex flex-column">
+  <div class="card h-100">
+    <div class="card-body h-100 relative">
+      <pre class="h-100 monospace" ref="buffer"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
+    </div>
+  </div>
+  <div class="mt-2 text-center">
+    <a class="pointer" href="" @click.prevent="copy">
+      {{ notification }} {{ formatted.length }} characters
+    </a>
+  </div>
+</div>
+</template>
+
+<script>
 import _ from 'lodash'
 import hljs from 'highlight.js/lib/highlight.js'
 
@@ -32,3 +48,4 @@ export default {
     }
   }
 }
+</script>
