@@ -4,7 +4,7 @@
     <div class="col-md-4 col-12 py-3 pr-md-2 h-100 d-flex flex-column">
       <textarea class="form-control monospace h-100"
                 :class="{ 'is-invalid': hasError }"
-                placeholder="json here"
+                placeholder="json or xml here"
                 v-model="input"
                 ref="input"></textarea>
       <div class="mt-2 text-center">
@@ -13,7 +13,7 @@
     </div>
     <div class="col-md-8 col-12 py-3 pl-md-2 h-100">
       <transition mode="out-in">
-        <formatted-output v-if="formatted" :formatted="formatted" :error="hasError"></formatted-output>
+        <formatted-output v-if="formatted" :formatted="formatted" :language="language" :error="hasError"></formatted-output>
         <json-info v-else></json-info>
       </transition>
     </div>
@@ -26,40 +26,64 @@ import _ from 'lodash'
 import FormattedOutput from './FormattedOutput.vue'
 import JsonInfo from './JsonInfo.vue'
 import Formatter from './formatter'
+import XmlFormatter from './xmlformatter'
+
+const xmlParser = new DOMParser()
+const xmlFormatter = new XmlFormatter()
 
 export default {
   data() {
     return {
       input: '',
-      parsed: undefined,
       hasError: false,
       indent: 2,
       formatter: 'native',
       compact: true,
-      tab: 'formatted'
+      tab: 'formatted',
+      language: 'json'
     }
   },
   computed: {
     formatted() {
-      if (_.trim(this.input) === '') {
+      const trimmed = _.trim(this.input)
+
+      if (trimmed === '') {
         this.parsed = undefined
         this.hasError = false
         return ''
       }
 
-      try {
-        this.parsed = JSON.parse(this.input)
-        this.hasError = false
-        return formatJson(this.parsed, this.formatter, this.indent, this.compact)
-      }
-      catch (e) {
-        this.parsed = undefined
-        this.hasError = true
-        return formatError(_.toString(e), this.input)
-      }
+      return _.startsWith(trimmed, '<')
+        ? this.xml(trimmed)
+        : this.json(trimmed)
     }
   },
   methods: {
+    json(input) {
+      try {
+        const parsed = JSON.parse(input)
+
+        this.hasError = false
+        this.language = 'json'
+        return formatJson(parsed, this.formatter, this.indent, this.compact)
+      }
+      catch (e) {
+        this.hasError = true
+        return formatError(_.toString(e), input)
+      }
+    },
+    xml(input) {
+      const parsed = xmlParser.parseFromString(input, 'application/xml')
+
+      if (parsed.getElementsByTagName('parsererror').length) {
+        this.hasError = true
+        return 'Error parsing XML string :\'('
+      }
+
+      this.hasError = false
+      this.language = 'xml'
+      return xmlFormatter.format(parsed)
+    },
     selectTab(name) {
       this.tab = name
     }

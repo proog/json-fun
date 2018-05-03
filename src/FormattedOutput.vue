@@ -21,6 +21,7 @@ export default {
   template: '#formatted-output',
   props: {
     formatted: String,
+    language: String,
     error: Boolean
   },
   data() {
@@ -33,7 +34,7 @@ export default {
       if (this.error)
         return this.formatted
 
-      return hljs.highlight('json', this.formatted).value
+      return hljs.highlight(this.language, this.formatted).value
     }
   },
   methods: {
