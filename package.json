@@ -17,14 +17,14 @@
   },
   "homepage": "https://github.com/proog/json-fun#readme",
   "devDependencies": {
-    "@vue/component-compiler-utils": "^1.0.0",
-    "parcel-bundler": "^1.7.0",
+    "@vue/component-compiler-utils": "^1.2.1",
+    "parcel-bundler": "^1.8.1",
     "rimraf": "^2.6.2",
     "vue-template-compiler": "^2.5.16"
   },
   "dependencies": {
     "highlight.js": "^9.12.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "vue": "^2.5.16",
     "vue-hot-reload-api": "^2.3.0"
   }
