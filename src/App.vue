@@ -48,7 +48,6 @@ export default {
       const trimmed = _.trim(this.input)
 
       if (trimmed === '') {
-        this.parsed = undefined
         this.hasError = false
         return ''
       }
