@@ -46,16 +46,29 @@ export default class XmlFormatter {
     }
 
     let childrenStr = ''
+    let compactText = false
 
-    for (let child of node.childNodes) {
-      const childStr = this.formatNode(child, indent + this.step)
+    // if the children consist of just one text node, we want to print it compactly on the same line
+    if (node.childNodes.length === 1 && node.childNodes.item(0) instanceof Text) {
+      childrenStr = this.escape(node.childNodes.item(0).nodeValue).trim()
+      compactText = true
+    }
+    else {
+      for (let child of node.childNodes) {
+        const childStr = this.formatNode(child, indent + this.step)
 
-      if (childStr.trim().length)
-        childrenStr += childStr
+        // ignore whitespace text nodes (it's probably existing formatting, which conflicts with our own)
+        if (childStr.trim().length)
+          childrenStr += childStr
+      }
     }
 
+    // make self-closing tag if empty
     if (!childrenStr.length)
       return str + '/>\n'
+
+    if (compactText)
+      return str + '>' + childrenStr + `</${node.nodeName}>\n`
 
     return str + '>\n' + childrenStr + spaces + `</${node.nodeName}>\n`
   }
