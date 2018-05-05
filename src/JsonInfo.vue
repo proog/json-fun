@@ -10,8 +10,9 @@
   <ul>
     <li>JSON: <code>0.00</code> becomes <code>0</code></li>
     <li>JSON: <code>0.0000001</code> becomes <code>1e-7</code></li>
-    <li>XML: leading and trailing whitespace in text nodes is <strong>ignored</strong></li>
+    <li>XML: leading and trailing whitespace in text nodes will be <strong>ignored</strong></li>
     <li>XML: empty nodes will be <strong>self-closed</strong></li>
+    <li>XML: internal DTDs in !DOCTYPE will be <strong>ignored</strong></li>
   </ul>
 </div>
 </template>

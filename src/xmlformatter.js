@@ -9,21 +9,11 @@ export default class XmlFormatter {
    * @param {Document} document
    */
   format(document) {
-    let declaration = ''
+    const declaration = this.formatDeclaration(document)
+    const doctype = this.formatDoctype(document)
+    const nodes = this.formatNode(document.documentElement, 0)
 
-    if (document.xmlEncoding || document.xmlStandalone) {
-      declaration = `<?xml version="${document.xmlVersion}"`
-
-      if (document.xmlEncoding)
-        declaration += ` encoding="${document.xmlEncoding}"`
-
-      if (document.xmlStandalone)
-        declaration += ` standalone="yes"`
-
-      declaration += '?>\n'
-    }
-
-    return declaration + this.formatNode(document.documentElement, 0)
+    return declaration + doctype + nodes
   }
 
   /**
@@ -68,6 +58,46 @@ export default class XmlFormatter {
       return str + '/>\n'
 
     return str + '>\n' + childrenStr + spaces + `</${node.nodeName}>\n`
+  }
+
+  /**
+   * @param {Document} doc
+   */
+  formatDeclaration(doc) {
+    // don't print a declaration if it's not important
+    if (doc.xmlVersion === '1.0' && !doc.xmlEncoding && !doc.xmlStandalone)
+      return ''
+
+    let declaration = `<?xml version="${doc.xmlVersion}"`
+
+    if (doc.xmlEncoding)
+      declaration += ` encoding="${doc.xmlEncoding}"`
+
+    if (doc.xmlStandalone)
+      declaration += ` standalone="yes"`
+
+    declaration += '?>\n'
+
+    return declaration
+  }
+
+  /**
+   * @param {Document} document
+   */
+  formatDoctype(document) {
+    if (!document.doctype)
+      return ''
+
+    const doctype = document.doctype
+
+    let str = `<!DOCTYPE ${doctype.name}`
+
+    if (doctype.systemId)
+      str += ` SYSTEM "${this.escapeAttribute(doctype.systemId)}"`
+
+    str += '>\n'
+
+    return str
   }
 
   /**
