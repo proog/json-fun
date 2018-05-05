@@ -11,7 +11,7 @@ export default class XmlFormatter {
   format(document) {
     let declaration = ''
 
-    if (document.xmlVersion) {
+    if (document.xmlEncoding || document.xmlStandalone) {
       declaration = `<?xml version="${document.xmlVersion}"`
 
       if (document.xmlEncoding)
