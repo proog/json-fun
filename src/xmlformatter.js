@@ -78,15 +78,19 @@ export default class XmlFormatter {
    */
   formatDeclaration(doc) {
     // don't print a declaration if it's not important
-    if (doc.xmlVersion === '1.0' && !doc.xmlEncoding && !doc.xmlStandalone)
+    const version = doc.xmlVersion || '1.0'
+    const encoding = doc.xmlEncoding || doc.inputEncoding || 'utf-8'
+    const standalone = doc.xmlStandalone
+
+    if (version === '1.0' && encoding.toLowerCase() === 'utf-8' && !standalone)
       return ''
 
-    let declaration = `<?xml version="${doc.xmlVersion}"`
+    let declaration = `<?xml version="${version}"`
 
-    if (doc.xmlEncoding)
-      declaration += ` encoding="${doc.xmlEncoding}"`
+    if (encoding)
+      declaration += ` encoding="${encoding}"`
 
-    if (doc.xmlStandalone)
+    if (standalone)
       declaration += ` standalone="yes"`
 
     declaration += '?>\n'
