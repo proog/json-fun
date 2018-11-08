@@ -23,6 +23,7 @@
     "vue-template-compiler": "^2.5.17"
   },
   "dependencies": {
+    "bootstrap": "^4.1.3",
     "highlight.js": "^9.12.0",
     "lodash": "^4.17.10",
     "vue": "^2.5.17",
