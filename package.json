@@ -17,7 +17,11 @@
   },
   "homepage": "https://github.com/proog/json-fun#readme",
   "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
     "@vue/component-compiler-utils": "^3.0.0",
+    "babel-jest": "^24.8.0",
+    "jest": "^24.8.0",
     "parcel-bundler": "^1.12.3",
     "rimraf": "^2.6.2",
     "vue-template-compiler": "^2.6.10"
