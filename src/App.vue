@@ -1,17 +1,17 @@
 <template>
-<div class="container-fluid h-100">
-  <div class="row h-100">
-    <div class="col-md-4 col-12 py-3 pr-md-2 h-100 d-flex flex-column">
-      <textarea class="form-control monospace h-100"
-                :class="{ 'is-invalid': hasError }"
+<div class="w-100 h-100 ph3">
+  <div class="h-100 flex flex-wrap">
+    <div class="w-100 w-third-ns h-100 flex flex-column pv3 pr1-ns">
+      <textarea class="w-100 h-100 ba b--gray br2 pa2 code f6 obsidian-gray bg-obsidian-dark-gray"
+                :class="{ 'b--red': hasError }"
                 placeholder="json or xml here"
                 v-model="input"
                 ref="input"></textarea>
-      <div class="mt-2 text-center">
+      <div class="mt2 tc">
         {{ input.length }} characters
       </div>
     </div>
-    <div class="col-md-8 col-12 py-3 pl-md-2 h-100">
+    <div class="w-100 w-two-thirds-ns h-100 pv3 pl1-ns">
       <transition mode="out-in">
         <formatted-output v-if="formatted" :formatted="formatted" :language="language" :error="hasError"></formatted-output>
         <json-info v-else></json-info>

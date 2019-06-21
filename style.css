@@ -1,26 +1,24 @@
-@import "bootstrap/dist/css/bootstrap.css";
-@import "highlight.js/styles/xcode.css";
+@import "tachyons/css/tachyons.css";
+@import "highlight.js/styles/obsidian.css";
 
-.pointer {
-    cursor: pointer;
-}
-.monospace {
-    font-size: 0.8em;
-    font-family: Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-}
-.relative {
-    position: relative;
-}
-.top-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-.overflow-auto {
-    overflow: auto;
+.link:focus {
+    outline: none;
 }
 textarea {
     resize: none;
+}
+textarea.b--red:focus {
+    outline-color: #ff4136;
+}
+
+.bg-obsidian-dark-gray {
+    background: rgb(40, 43, 46);
+}
+.obsidian-gray {
+    color: #e0e2e4;
+}
+.obsidian-orange {
+    color: #ec7600;
 }
 
 .v-enter-active {

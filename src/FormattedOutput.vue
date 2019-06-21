@@ -1,12 +1,10 @@
 <template>
-<div class="h-100 d-flex flex-column">
-  <div class="card h-100">
-    <div class="card-body h-100 relative">
-      <pre class="h-100 monospace" ref="buffer"><code v-if="error">{{ highlighted }}</code><code v-else v-html="highlighted"></code></pre>
-    </div>
+<div class="h-100 flex flex-column">
+  <div class="h-100 ba b--gray br2 overflow-auto">
+    <pre class="ma0 f6 lh-copy" ref="buffer"><code v-if="error" class="hljs">{{ highlighted }}</code><code v-else class="hljs" v-html="highlighted"></code></pre>
   </div>
-  <div class="mt-2 text-center">
-    <a class="pointer" href="" @click.prevent="copy">
+  <div class="mt2 tc">
+    <a class="link underline-hover obsidian-orange pointer" href="" @click.prevent="copy">
       {{ notification }} {{ formatted.length }} characters
     </a>
   </div>
