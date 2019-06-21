@@ -39,8 +39,10 @@ export default {
   },
   methods: {
     copy() {
-      window.getSelection().selectAllChildren(this.$refs.buffer)
+      const selection = window.getSelection()
+      selection.selectAllChildren(this.$refs.buffer)
       document.execCommand('copy')
+      selection.removeAllRanges()
 
       this.notification = 'Copied'
       _.delay(() => {
