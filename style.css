@@ -2,31 +2,36 @@
 @import "highlight.js/styles/obsidian.css";
 
 .link:focus {
-    outline: none;
+  outline: none;
 }
 textarea {
-    resize: none;
+  resize: none;
+  outline-color: #93c763;
 }
 textarea.b--red:focus {
-    outline-color: #ff4136;
+  outline-color: #ff4136;
 }
 
 .bg-obsidian-dark-gray {
-    background: rgb(40, 43, 46);
+  background: rgb(40, 43, 46);
 }
 .obsidian-gray {
-    color: #e0e2e4;
+  color: #e0e2e4;
+}
+.obsidian-green {
+  color: #93c763;
 }
 .obsidian-orange {
-    color: #ec7600;
+  color: #ec7600;
 }
 
 .v-enter-active {
-    transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 .v-leave-active {
-    transition: all .3s ease;
+  transition: all 0.3s ease;
 }
-.v-enter, .v-leave-to {
-    opacity: 0;
+.v-enter,
+.v-leave-to {
+  opacity: 0;
 }
