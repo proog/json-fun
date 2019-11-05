@@ -1,7 +1,7 @@
 <template>
 <div class="h-100 flex flex-column">
   <div class="h-100 ba b--gray br2 overflow-auto">
-    <pre class="ma0 f6 lh-copy" ref="buffer"><code v-if="error" class="hljs">{{ highlighted }}</code><code v-else class="hljs" v-html="highlighted"></code></pre>
+    <pre class="h-100 ma0 f6 lh-copy" ref="buffer"><code v-if="error" class="h-100 hljs">{{ highlighted }}</code><code v-else class="h-100 hljs" v-html="highlighted"></code></pre>
   </div>
   <div class="mt2 tc">
     <a class="link underline-hover obsidian-orange pointer" href="" @click.prevent="copy">
