@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "highlight.js": "^9.16.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "tachyons": "^4.11.1",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.4"
