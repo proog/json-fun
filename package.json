@@ -17,16 +17,16 @@
   },
   "homepage": "https://github.com/proog/json-fun#readme",
   "devDependencies": {
-    "@vue/component-compiler-utils": "^3.0.1",
+    "@vue/component-compiler-utils": "^3.2.0",
     "parcel": "^1.12.4",
-    "rimraf": "^3.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "rimraf": "^3.0.2",
+    "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
-    "highlight.js": "^9.16.2",
-    "lodash": "^4.17.15",
-    "tachyons": "^4.11.1",
-    "vue": "^2.6.10",
+    "highlight.js": "^10.1.2",
+    "lodash": "^4.17.19",
+    "tachyons": "^4.12.0",
+    "vue": "^2.6.11",
     "vue-hot-reload-api": "^2.3.4"
   }
 }

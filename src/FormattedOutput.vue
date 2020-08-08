@@ -13,7 +13,7 @@
 
 <script>
 import _ from 'lodash'
-import hljs from 'highlight.js/lib/highlight.js'
+import hljs from 'highlight.js'
 
 export default {
   template: '#formatted-output',
