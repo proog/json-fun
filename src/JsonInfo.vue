@@ -1,6 +1,6 @@
 <template>
-  <div class="h-100 flex flex-column">
-    <div class="h-100 pa3 overflow-auto">
+  <div class="h-full flex flex-col">
+    <div class="h-full p-4 overflow-auto">
       <h1>Make it readable!</h1>
       <p>This tool formats JSON (and XML) for human readability only.</p>
       <p>
@@ -16,10 +16,10 @@
         <li>XML: internal DTDs in !DOCTYPE will be <em>ignored</em></li>
       </ul>
     </div>
-    <div class="mt2 tc">
+    <div class="mt-2 text-center">
       A project by
       <a
-        class="link underline-hover obsidian-orange"
+        class="focus:outline-none hover:underline obsidian-orange"
         href="https://permortensen.com"
         >Per</a
       >

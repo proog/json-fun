@@ -1,14 +1,14 @@
 <template>
-  <div class="h-100 flex flex-column">
-    <div class="h-100 ba b--gray br2 overflow-auto">
+  <div class="h-full flex flex-col">
+    <div class="h-full border border-gray-800 overflow-auto">
       <pre
-        class="h-100 ma0 f6 lh-copy"
+        class="h-full m-0 text-sm"
         ref="buffer"
-      ><code v-if="error" class="h-100 hljs">{{ highlighted }}</code><code v-else class="h-100 hljs" v-html="highlighted"></code></pre>
+      ><code v-if="error" class="h-full hljs">{{ highlighted }}</code><code v-else class="h-full hljs" v-html="highlighted"></code></pre>
     </div>
-    <div class="mt2 tc">
+    <div class="mt-2 text-center">
       <a
-        class="link underline-hover obsidian-orange pointer"
+        class="focus:outline-none hover:underline obsidian-orange cursor-pointer"
         href=""
         @click.prevent="copy"
       >

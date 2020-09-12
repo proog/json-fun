@@ -1,15 +1,19 @@
-@import "tachyons/css/tachyons.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "highlight.js/styles/obsidian.css";
 
-.link:focus {
-  outline: none;
-}
-textarea {
-  resize: none;
-  outline-color: #93c763;
-}
-textarea.b--red:focus {
-  outline-color: #ff4136;
+@layer base {
+  h1 {
+    @apply text-4xl mb-4;
+  }
+  p {
+    @apply mb-4;
+  }
+  ul {
+    @apply list-disc pl-8;
+  }
 }
 
 .bg-obsidian-dark-gray {

@@ -1,17 +1,17 @@
 <template>
-  <div class="w-100 h-100 ph3">
-    <div class="h-100 flex flex-wrap">
-      <div class="w-100 w-third-ns h-100 flex flex-column pv3 pr1-ns">
+  <div class="w-full h-full px-4">
+    <div class="h-full flex flex-wrap">
+      <div class="w-full h-full flex flex-col py-4 md:w-1/3 md:pr-2">
         <textarea
-          class="w-100 h-100 ba b--gray br2 pa2 code f6 obsidian-gray bg-obsidian-dark-gray"
-          :class="{ 'b--red': hasError }"
+          class="w-full h-full border border-gray-800 p-2 font-mono text-xs leading-tight obsidian-gray bg-obsidian-dark-gray resize-none"
+          :class="{ 'border-red-800': hasError }"
           placeholder="json or xml here"
           v-model="input"
           ref="input"
         ></textarea>
-        <div class="mt2 tc">{{ input.length }} characters</div>
+        <div class="mt-2 text-center">{{ input.length }} characters</div>
       </div>
-      <div class="w-100 w-two-thirds-ns h-100 pv3 pl1-ns">
+      <div class="w-full h-full py-4 md:w-2/3 md:pl-2">
         <transition mode="out-in">
           <formatted-output
             v-if="formatted"
