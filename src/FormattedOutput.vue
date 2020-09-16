@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import hljs from "highlight.js";
+import hljs from "highlight.js/lib/core";
 
 export default {
   template: "#formatted-output",

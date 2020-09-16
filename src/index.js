@@ -1,4 +1,4 @@
-import hljs from "highlight.js";
+import hljs from "highlight.js/lib/core";
 import hljson from "highlight.js/lib/languages/json";
 import hlxml from "highlight.js/lib/languages/xml";
 import Vue from "vue";
