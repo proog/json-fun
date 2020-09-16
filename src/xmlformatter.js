@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 export default class XmlFormatter {
   constructor(step = 2) {
     this.step = step;
@@ -21,7 +19,7 @@ export default class XmlFormatter {
    * @param {number} indent
    */
   formatNode(node, indent) {
-    const spaces = _.repeat(" ", indent);
+    const spaces = " ".repeat(indent);
 
     if (node instanceof Text)
       return spaces + this.escape(node.nodeValue).trim() + "\n";
@@ -37,7 +35,7 @@ export default class XmlFormatter {
    * @param {number} indent
    */
   formatElementNode(node, indent) {
-    const spaces = _.repeat(" ", indent);
+    const spaces = " ".repeat(indent);
 
     let str = spaces + "<" + node.nodeName;
 

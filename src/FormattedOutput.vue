@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import _ from "lodash";
 import hljs from "highlight.js";
 
 export default {
@@ -49,7 +48,7 @@ export default {
       selection.removeAllRanges();
 
       this.notification = "Copied";
-      _.delay(() => {
+      setTimeout(() => {
         this.notification = "Copy";
       }, 1500);
     },

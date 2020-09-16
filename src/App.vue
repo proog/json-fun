@@ -27,10 +27,8 @@
 </template>
 
 <script>
-import _ from "lodash";
 import FormattedOutput from "./FormattedOutput.vue";
 import JsonInfo from "./JsonInfo.vue";
-import Formatter from "./formatter";
 import XmlFormatter from "./xmlformatter";
 
 const xmlParser = new DOMParser();
@@ -42,7 +40,6 @@ export default {
       input: "",
       hasError: false,
       indent: 2,
-      formatter: "native",
       compact: true,
       tab: "formatted",
       language: "json",
@@ -50,16 +47,14 @@ export default {
   },
   computed: {
     formatted() {
-      const trimmed = _.trim(this.input);
+      const trimmed = this.input.trim();
 
       if (trimmed === "") {
         this.hasError = false;
         return "";
       }
 
-      return _.startsWith(trimmed, "<")
-        ? this.xml(trimmed)
-        : this.json(trimmed);
+      return trimmed.startsWith("<") ? this.xml(trimmed) : this.json(trimmed);
     },
   },
   methods: {
@@ -69,10 +64,10 @@ export default {
 
         this.hasError = false;
         this.language = "json";
-        return formatJson(parsed, this.formatter, this.indent, this.compact);
+        return formatJson(parsed, this.indent);
       } catch (e) {
         this.hasError = true;
-        return formatError(_.toString(e), input);
+        return formatError(e.toString(), input);
       }
     },
     xml(input) {
@@ -100,10 +95,8 @@ export default {
   },
 };
 
-function formatJson(data, formatter, indent, compact) {
-  return formatter === "custom"
-    ? new Formatter(indent, compact).format(data)
-    : JSON.stringify(data, null, _.repeat(" ", indent));
+function formatJson(data, indent) {
+  return JSON.stringify(data, null, " ".repeat(indent));
 }
 
 function formatError(error, input) {
@@ -111,7 +104,7 @@ function formatError(error, input) {
 
   if (!match || match.length !== 2) return error;
 
-  let position = _.parseInt(match[1]),
+  let position = parseInt(match[1], 10),
     lastNewline = input.lastIndexOf("\n", position - 1),
     nextNewline = input.indexOf("\n", position),
     start = Math.max(lastNewline > -1 ? lastNewline + 1 : 0, position - 20),
@@ -122,7 +115,7 @@ function formatError(error, input) {
     snippet = input.substring(start, end),
     line = (input.substring(0, position).match(/\n/g) || []).length + 1,
     col = position - (lastNewline > -1 ? lastNewline : 0),
-    markerIndent = _.repeat(" ", position - start);
+    markerIndent = " ".repeat(position - start);
 
   return (
     `${error}\n\n` +
