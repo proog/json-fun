@@ -4,7 +4,7 @@
       <pre
         class="h-full m-0 text-sm"
         ref="buffer"
-      ><code v-if="error" class="h-full hljs">{{ highlighted }}</code><code v-else class="h-full hljs" v-html="highlighted"></code></pre>
+      ><code v-if="hasError" class="h-full hljs">{{ highlighted }}</code><code v-else class="h-full hljs" v-html="highlighted"></code></pre>
     </div>
     <div class="mt-2 text-center">
       <a
@@ -20,22 +20,18 @@
 
 <script>
 import hljs from "highlight.js/lib/core";
+import { mapState } from "vuex";
 
 export default {
-  template: "#formatted-output",
-  props: {
-    formatted: String,
-    language: String,
-    error: Boolean,
-  },
   data() {
     return {
       notification: "Copy",
     };
   },
   computed: {
+    ...mapState(["formatted", "language", "hasError"]),
     highlighted() {
-      if (this.error) return this.formatted;
+      if (this.hasError) return this.formatted;
 
       return hljs.highlight(this.language, this.formatted).value;
     },
