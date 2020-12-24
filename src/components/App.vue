@@ -29,7 +29,7 @@
 <script>
 import FormattedOutput from "./FormattedOutput.vue";
 import JsonInfo from "./JsonInfo.vue";
-import XmlFormatter from "./xmlformatter";
+import XmlFormatter from "../xmlformatter";
 
 const xmlParser = new DOMParser();
 const xmlFormatter = new XmlFormatter();
@@ -50,6 +50,7 @@ export default {
       const trimmed = this.input.trim();
 
       if (trimmed === "") {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.hasError = false;
         return "";
       }

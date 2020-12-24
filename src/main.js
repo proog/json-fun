@@ -2,12 +2,14 @@ import hljs from "highlight.js/lib/core";
 import hljson from "highlight.js/lib/languages/json";
 import hlxml from "highlight.js/lib/languages/xml";
 import Vue from "vue";
-import App from "./App.vue";
+import "./assets/style.css";
+import App from "./components/App.vue";
 
 hljs.registerLanguage("json", hljson);
 hljs.registerLanguage("xml", hlxml);
 
+Vue.config.productionTip = false;
+
 new Vue({
-  el: "#app",
   render: (h) => h(App),
-});
+}).$mount("#app");

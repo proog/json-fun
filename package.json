@@ -3,29 +3,42 @@
   "version": "1.0.0",
   "description": "Fun with JSON",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "rimraf dist && parcel build index.html --public-url ./"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/proog/json-fun.git"
-  },
-  "author": "proog",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/proog/json-fun/issues"
-  },
-  "homepage": "https://github.com/proog/json-fun#readme",
-  "devDependencies": {
-    "@vue/component-compiler-utils": "^3.2.0",
-    "parcel": "^1.12.4",
-    "rimraf": "^3.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "core-js": "^3.6.5",
     "highlight.js": "^10.4.1",
     "tailwindcss": "^1.8.8",
-    "vue": "^2.6.11",
-    "vue-hot-reload-api": "^2.3.4"
-  }
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
