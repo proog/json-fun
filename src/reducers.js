@@ -1,42 +1,42 @@
-import Vue from "vue";
-import Vuex from "vuex";
 import { formatJsonError } from "./formatJsonError";
 import XmlFormatter from "./XmlFormatter";
 
 const xmlParser = new DOMParser();
 const xmlFormatter = new XmlFormatter();
 
-Vue.use(Vuex);
+const initialState = {
+  input: "",
+  formatted: "",
+  hasError: false,
+  language: "json",
+};
 
-export default new Vuex.Store({
-  state: {
-    input: "",
-    formatted: "",
-    hasError: false,
-    language: "json",
-  },
-  mutations: {
-    formatInput(state, input) {
-      state.input = input;
+export default function rootReducer(state = initialState, action) {
+  switch (action.type) {
+    case "formatInput":
+      state = { ...state, input: action.input };
 
-      const trimmed = input.trim();
+      const trimmed = action.input.trim();
 
       if (trimmed === "") {
         state.hasError = false;
         state.formatted = "";
-        return;
+        return state;
       }
 
       if (trimmed.startsWith("<")) {
         state.language = "xml";
-        formatXml(state, input);
+        formatXml(state, action.input);
       } else {
         state.language = "json";
-        formatJson(state, input);
+        formatJson(state, action.input);
       }
-    },
-  },
-});
+
+      return state;
+    default:
+      return state;
+  }
+}
 
 function formatJson(state, input) {
   try {

@@ -115,9 +115,7 @@ export default class XmlFormatter {
    * @param {string} str
    */
   escapeAttribute(str) {
-    return this.escape(str)
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&apos;");
+    return this.escape(str).replace(/"/g, "&quot;").replace(/'/g, "&apos;");
   }
 
   /**
