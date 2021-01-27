@@ -7,8 +7,8 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import "./assets/style.css";
 import App from "./components/App";
-import rootReducer from "./reducers";
 import reportWebVitals from "./reportWebVitals";
+import rootReducer from "./store";
 
 hljs.registerLanguage("json", hljson);
 hljs.registerLanguage("xml", hlxml);
