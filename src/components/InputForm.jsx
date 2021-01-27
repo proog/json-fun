@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { formatInput } from "../actionCreators";
+import { formatInput } from "../actions";
 
 function InputForm({ input, hasError, formatInput, className }) {
   let textareaClass =

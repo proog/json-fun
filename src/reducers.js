@@ -1,3 +1,4 @@
+import { FORMAT_INPUT } from "./actions";
 import { formatJsonError } from "./formatJsonError";
 import XmlFormatter from "./XmlFormatter";
 
@@ -13,7 +14,7 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case "formatInput":
+    case FORMAT_INPUT:
       state = { ...state, input: action.input };
 
       const trimmed = action.input.trim();
