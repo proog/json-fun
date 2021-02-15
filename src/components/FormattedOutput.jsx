@@ -34,16 +34,15 @@ function FormattedOutput({ hasError, formatted, language }) {
         </pre>
       </div>
       <div className="mt-2 text-center">
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a
-          className="focus:outline-none hover:underline obsidian-orange cursor-pointer"
+        <button
+          className="focus:outline-none focus:ring hover:underline obsidian-orange cursor-pointer"
           onClick={(e) => {
             e.preventDefault();
             copy();
           }}
         >
           {notification} {formatted.length} characters
-        </a>
+        </button>
       </div>
     </div>
   );
