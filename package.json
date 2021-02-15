@@ -6,6 +6,7 @@
   "dependencies": {
     "@craco/craco": "^6.0.0",
     "@reduxjs/toolkit": "^1.5.0",
+    "@tailwindcss/postcss7-compat": "^2.0.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -17,7 +18,7 @@
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.1",
     "react-transition-group": "^4.4.1",
-    "tailwindcss": "^1.8.8",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
