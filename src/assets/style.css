@@ -16,19 +16,6 @@
   }
 }
 
-.bg-obsidian-dark-gray {
-  background: rgb(40, 43, 46);
-}
-.obsidian-gray {
-  color: #e0e2e4;
-}
-.obsidian-green {
-  color: #93c763;
-}
-.obsidian-orange {
-  color: #ec7600;
-}
-
 .fade-enter {
   opacity: 0;
 }

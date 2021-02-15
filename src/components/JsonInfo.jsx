@@ -31,7 +31,7 @@ function JsonInfo() {
       <div className="mt-2 text-center">
         A project by{" "}
         <a
-          className="focus:outline-none hover:underline obsidian-orange"
+          className="focus:outline-none hover:underline text-obsidian-orange"
           href="https://permortensen.com"
         >
           Per

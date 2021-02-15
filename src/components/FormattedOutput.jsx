@@ -35,7 +35,7 @@ function FormattedOutput({ hasError, formatted, language }) {
       </div>
       <div className="mt-2 text-center">
         <button
-          className="focus:outline-none focus:ring hover:underline obsidian-orange cursor-pointer"
+          className="focus:outline-none focus:ring hover:underline text-obsidian-orange cursor-pointer"
           onClick={(e) => {
             e.preventDefault();
             copy();
