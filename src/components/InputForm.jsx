@@ -3,8 +3,10 @@ import { formatInput } from "../actions";
 
 function InputForm({ input, hasError, formatInput, className }) {
   let textareaClass =
-    "w-full h-full border p-2 font-mono text-xs leading-tight obsidian-gray bg-obsidian-dark-gray resize-none";
-  textareaClass += hasError ? " border-red-800" : " border-gray-800";
+    "w-full h-full border p-2 font-mono text-xs leading-tight obsidian-gray bg-obsidian-dark-gray resize-none focus:outline-none focus:ring";
+  textareaClass += hasError
+    ? " border-red-500 focus:ring-red-500"
+    : " border-gray-500 focus:ring-gray-500";
 
   return (
     <div className={className}>

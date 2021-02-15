@@ -21,7 +21,7 @@ function FormattedOutput({ hasError, formatted, language }) {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="h-full border border-gray-800 overflow-auto">
+      <div className="h-full border border-gray-500 overflow-auto">
         <pre className="h-full m-0 text-sm" ref={bufferRef}>
           {hasError ? (
             <code className="h-full hljs">{highlighted}</code>
