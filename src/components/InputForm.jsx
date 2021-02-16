@@ -3,7 +3,7 @@ import { formatInput } from "../actions";
 
 function InputForm({ input, hasError, formatInput, className }) {
   let textareaClass =
-    "w-full h-full border p-2 font-mono text-xs leading-tight text-obsidian-gray bg-obsidian-dark-gray resize-none focus:outline-none focus:ring";
+    "w-full h-full border p-2 font-mono text-xs leading-tight resize-none focus:outline-none focus:ring text-atom-dark bg-atom-light dark:text-atom-light dark:bg-atom-dark";
   textareaClass += hasError
     ? " border-red-500 focus:ring-red-500"
     : " border-gray-500 focus:ring-gray-500";
