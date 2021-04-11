@@ -6,7 +6,7 @@ import XmlFormatter from "./XmlFormatter";
 const xmlParser = new DOMParser();
 const xmlFormatter = new XmlFormatter();
 
-const initialState = {
+export const initialState = {
   input: "",
   formatted: "",
   hasError: false,
