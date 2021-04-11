@@ -1,4 +1,5 @@
-import { FORMAT_INPUT, SET_INPUT } from "./actions";
+import { createReducer } from "@reduxjs/toolkit";
+import { formatInput, setInput } from "./actions";
 import { formatJsonError } from "./formatJsonError";
 import XmlFormatter from "./XmlFormatter";
 
@@ -12,13 +13,12 @@ const initialState = {
   language: "json",
 };
 
-export default function rootReducer(state = initialState, action) {
-  switch (action.type) {
-    case SET_INPUT:
-      state = { ...state, input: action.input };
-      return state;
-    case FORMAT_INPUT:
-      state = { ...state };
+export const rootReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(setInput, (state, action) => {
+      state.input = action.payload;
+    })
+    .addCase(formatInput, (state) => {
       const trimmed = state.input.trim();
 
       if (trimmed === "") {
@@ -34,12 +34,8 @@ export default function rootReducer(state = initialState, action) {
         state.language = "json";
         formatJson(state, state.input);
       }
-
-      return state;
-    default:
-      return state;
-  }
-}
+    });
+});
 
 function formatJson(state, input) {
   try {

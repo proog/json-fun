@@ -1,15 +1,8 @@
+import { createAction } from "@reduxjs/toolkit";
 import { debounce } from "debounce";
 
-export const SET_INPUT = "setInput";
-export const FORMAT_INPUT = "formatInput";
-
-export function setInput(input) {
-  return { type: SET_INPUT, input };
-}
-
-export function formatInput() {
-  return { type: FORMAT_INPUT };
-}
+export const setInput = createAction("setInput");
+export const formatInput = createAction("formatInput");
 
 const debouncedFormatInput = debounce((dispatch) => {
   dispatch(formatInput());

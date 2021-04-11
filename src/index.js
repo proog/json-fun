@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import "./assets/style.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
-import rootReducer from "./store";
+import { rootReducer } from "./store";
 
 hljs.registerLanguage("json", hljson);
 hljs.registerLanguage("xml", hlxml);
