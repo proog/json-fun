@@ -1,4 +1,4 @@
-import { FORMAT_INPUT } from "./actions";
+import { FORMAT_INPUT, SET_INPUT } from "./actions";
 import { formatJsonError } from "./formatJsonError";
 import XmlFormatter from "./XmlFormatter";
 
@@ -14,10 +14,12 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case FORMAT_INPUT:
+    case SET_INPUT:
       state = { ...state, input: action.input };
-
-      const trimmed = action.input.trim();
+      return state;
+    case FORMAT_INPUT:
+      state = { ...state };
+      const trimmed = state.input.trim();
 
       if (trimmed === "") {
         state.hasError = false;
@@ -27,10 +29,10 @@ export default function rootReducer(state = initialState, action) {
 
       if (trimmed.startsWith("<")) {
         state.language = "xml";
-        formatXml(state, action.input);
+        formatXml(state, state.input);
       } else {
         state.language = "json";
-        formatJson(state, action.input);
+        formatJson(state, state.input);
       }
 
       return state;
