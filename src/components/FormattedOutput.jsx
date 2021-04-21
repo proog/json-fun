@@ -1,17 +1,13 @@
-import hljs from "highlight.js/lib/core";
 import { createRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { getFormatted, getHasError, getLanguage } from "../selectors";
+import { getFormatted, getHasError, getHighlightedOutput } from "../selectors";
 
 function FormattedOutput() {
   const formatted = useSelector(getFormatted);
   const hasError = useSelector(getHasError);
-  const language = useSelector(getLanguage);
+  const highlighted = useSelector(getHighlightedOutput);
   const [notification, setNotification] = useState("Copy");
   const bufferRef = createRef();
-  const highlighted = hasError
-    ? formatted
-    : { __html: hljs.highlight(language, formatted).value };
 
   function copy() {
     const selection = window.getSelection();
@@ -32,7 +28,7 @@ function FormattedOutput() {
           ) : (
             <code
               className="h-full hljs"
-              dangerouslySetInnerHTML={highlighted}
+              dangerouslySetInnerHTML={{ __html: highlighted }}
             ></code>
           )}
         </pre>
