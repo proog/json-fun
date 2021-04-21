@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAndFormatInput } from "../actions";
 import { getHasError, getInput } from "../selectors";
 
-function InputForm({ className }) {
+function InputForm() {
   const input = useSelector(getInput);
   const hasError = useSelector(getHasError);
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ function InputForm({ className }) {
     : " border-gray-500 focus:ring-gray-500";
 
   return (
-    <div className={className}>
+    <div className="h-full flex flex-col">
       <textarea
         className={textareaClass}
         placeholder="json or xml here"
