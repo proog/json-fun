@@ -1,8 +1,12 @@
 import hljs from "highlight.js/lib/core";
 import { createRef, useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { getFormatted, getHasError, getLanguage } from "../selectors";
 
-function FormattedOutput({ hasError, formatted, language }) {
+function FormattedOutput() {
+  const formatted = useSelector(getFormatted);
+  const hasError = useSelector(getHasError);
+  const language = useSelector(getLanguage);
   const [notification, setNotification] = useState("Copy");
   const bufferRef = createRef();
   const highlighted = hasError
@@ -48,10 +52,4 @@ function FormattedOutput({ hasError, formatted, language }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  hasError: state.hasError,
-  formatted: state.formatted,
-  language: state.language,
-});
-
-export default connect(mapStateToProps)(FormattedOutput);
+export default FormattedOutput;

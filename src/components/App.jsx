@@ -1,10 +1,13 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
+import { getFormatted } from "../selectors";
 import FormattedOutput from "./FormattedOutput";
 import InputForm from "./InputForm";
 import JsonInfo from "./JsonInfo";
 
-function App({ formatted }) {
+function App() {
+  const formatted = useSelector(getFormatted);
+
   return (
     <div className="w-full h-full px-4">
       <div className="h-full flex flex-wrap">
@@ -27,6 +30,4 @@ function App({ formatted }) {
   );
 }
 
-const mapStateToProps = (state) => ({ formatted: state.formatted });
-
-export default connect(mapStateToProps)(App);
+export default App;

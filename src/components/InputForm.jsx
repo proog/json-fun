@@ -1,7 +1,12 @@
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAndFormatInput } from "../actions";
+import { getHasError, getInput } from "../selectors";
 
-function InputForm({ input, hasError, setAndFormatInput, className }) {
+function InputForm({ className }) {
+  const input = useSelector(getInput);
+  const hasError = useSelector(getHasError);
+  const dispatch = useDispatch();
+
   let textareaClass =
     "w-full h-full border p-2 font-mono text-xs leading-tight resize-none focus:outline-none focus:ring text-atom-dark bg-atom-light dark:text-atom-light dark:bg-atom-dark";
   textareaClass += hasError
@@ -14,7 +19,7 @@ function InputForm({ input, hasError, setAndFormatInput, className }) {
         className={textareaClass}
         placeholder="json or xml here"
         value={input}
-        onInput={(e) => setAndFormatInput(e.target.value)}
+        onInput={(e) => dispatch(setAndFormatInput(e.target.value))}
         autoFocus
       ></textarea>
       <div className="mt-2 text-center">{input.length} characters</div>
@@ -22,9 +27,4 @@ function InputForm({ input, hasError, setAndFormatInput, className }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  input: state.input,
-  hasError: state.hasError,
-});
-
-export default connect(mapStateToProps, { setAndFormatInput })(InputForm);
+export default InputForm;
