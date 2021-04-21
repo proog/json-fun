@@ -33,7 +33,7 @@ function FormattedOutput() {
           )}
         </pre>
       </div>
-      <div className="mt-2 text-center">
+      <footer className="mt-2 text-center">
         <button
           className="focus:outline-none focus:ring hover:underline text-yellow-600 cursor-pointer"
           onClick={(e) => {
@@ -43,7 +43,7 @@ function FormattedOutput() {
         >
           {notification} {formatted.length} characters
         </button>
-      </div>
+      </footer>
     </div>
   );
 }

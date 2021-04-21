@@ -9,7 +9,7 @@ function App() {
   const formatted = useSelector(getFormatted);
 
   return (
-    <div className="w-full h-full px-4">
+    <main className="w-full h-full px-4">
       <div className="h-full flex flex-wrap">
         <div className="w-full h-full py-4 md:w-1/3 md:pr-2">
           <InputForm />
@@ -28,7 +28,7 @@ function App() {
           </SwitchTransition>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

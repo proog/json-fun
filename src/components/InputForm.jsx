@@ -22,7 +22,7 @@ function InputForm() {
         onInput={(e) => dispatch(setAndFormatInput(e.target.value))}
         autoFocus
       ></textarea>
-      <div className="mt-2 text-center">{input.length} characters</div>
+      <footer className="mt-2 text-center">{input.length} characters</footer>
     </div>
   );
 }

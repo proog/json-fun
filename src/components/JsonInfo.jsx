@@ -28,7 +28,7 @@ function JsonInfo() {
           </li>
         </ul>
       </div>
-      <div className="mt-2 text-center">
+      <footer className="mt-2 text-center">
         A project by{" "}
         <a
           className="focus:outline-none hover:underline text-yellow-600"
@@ -36,7 +36,7 @@ function JsonInfo() {
         >
           Per
         </a>
-      </div>
+      </footer>
     </div>
   );
 }
