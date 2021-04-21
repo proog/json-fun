@@ -11,5 +11,5 @@ export const getHighlightedOutput = createSelector(
   getLanguage,
   getHasError,
   (formatted, language, hasError) =>
-    hasError ? formatted : hljs.highlight(language, formatted).value
+    hasError ? formatted : hljs.highlight(formatted, { language }).value
 );
