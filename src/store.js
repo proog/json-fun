@@ -24,33 +24,33 @@ export const rootReducer = createReducer(initialState, (builder) => {
       if (trimmed === "") {
         state.hasError = false;
         state.formatted = "";
-        return state;
+        return;
       }
 
       if (trimmed.startsWith("<")) {
         state.language = "xml";
-        formatXml(state, state.input);
+        formatXml(state);
       } else {
         state.language = "json";
-        formatJson(state, state.input);
+        formatJson(state);
       }
     });
 });
 
-function formatJson(state, input) {
+function formatJson(state) {
   try {
-    const parsed = JSON.parse(input);
+    const parsed = JSON.parse(state.input);
 
     state.hasError = false;
     state.formatted = JSON.stringify(parsed, null, "  ");
   } catch (e) {
     state.hasError = true;
-    state.formatted = formatJsonError(e.toString(), input);
+    state.formatted = formatJsonError(e.toString(), state.input);
   }
 }
 
-function formatXml(state, input) {
-  const parsed = xmlParser.parseFromString(input, "application/xml");
+function formatXml(state) {
+  const parsed = xmlParser.parseFromString(state.input, "application/xml");
 
   if (parsed.getElementsByTagName("parsererror").length) {
     state.hasError = true;
