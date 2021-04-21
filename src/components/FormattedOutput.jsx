@@ -21,7 +21,7 @@ function FormattedOutput() {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="h-full border border-gray-500 overflow-auto">
+      <div className="h-full border bg-atom-light dark:bg-atom-dark border-gray-500 overflow-auto">
         <pre className="h-full m-0 text-sm" ref={bufferRef}>
           {hasError ? (
             <code className="h-full hljs">{highlighted}</code>
