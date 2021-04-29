@@ -1,4 +1,4 @@
-import { createRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { getFormatted, getHasError, getHighlightedOutput } from "../selectors";
 
@@ -7,7 +7,7 @@ function FormattedOutput() {
   const hasError = useSelector(getHasError);
   const highlighted = useSelector(getHighlightedOutput);
   const [notification, setNotification] = useState("Copy");
-  const bufferRef = createRef();
+  const bufferRef = useRef();
 
   function copy() {
     const selection = window.getSelection();
