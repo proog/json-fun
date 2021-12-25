@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>json.fun | Fun with JSON</title>
+  </head>
+  <body
+    class="
+      h-full
+      font-sans
+      text-atom-dark
+      bg-atom-light-dimmed
+      dark:text-atom-light dark:bg-atom-dark-dimmed
+    "
+  >
+    <main class="w-full h-full px-4">
+      <div class="h-full flex flex-wrap">
+        <div class="w-full h-full py-4 md:w-1/3 md:pr-2">
+          <div class="h-full flex flex-col">
+            <textarea
+              class="
+                w-full
+                h-full
+                border
+                p-2
+                font-mono
+                text-xs
+                leading-tight
+                resize-none
+                focus:outline-none focus:ring
+                text-atom-dark
+                bg-atom-light
+                dark:text-atom-light dark:bg-atom-dark
+              "
+              placeholder="json or xml here"
+              autofocus
+            ></textarea>
+            <footer class="mt-2 text-center">
+              <span id="inputLength">0</span> characters
+            </footer>
+          </div>
+        </div>
+
+        <div class="w-full h-full py-4 md:w-2/3 md:pl-2">
+          <div
+            id="formattedOutput"
+            class="h-full flex flex-col"
+            style="display: none"
+          >
+            <div
+              class="
+                h-full
+                border
+                bg-atom-light
+                dark:bg-atom-dark
+                border-gray-500
+                overflow-auto
+              "
+            >
+              <pre
+                class="h-full m-0 text-sm"
+              ><code class="h-full hljs"></code></pre>
+            </div>
+            <footer class="mt-2 text-center">
+              <button
+                id="copyButton"
+                class="
+                  focus:outline-none focus:ring
+                  hover:underline
+                  text-yellow-600
+                  cursor-pointer
+                "
+              >
+                <span id="copyDescription">Copy</span>
+                <span id="formattedLength">0</span> characters
+              </button>
+            </footer>
+          </div>
+
+          <div id="jsonInfo" class="h-full flex flex-col">
+            <div class="h-full p-4 overflow-auto">
+              <h1>Make it readable!</h1>
+              <p>
+                This tool formats JSON (and XML) for human readability only.
+              </p>
+              <p>
+                Don't use this tool for use cases where precision is critical.
+                It parses and re-renders the input and will often
+                <em>not</em> produce a 1:1 copy.
+              </p>
+              <p>Examples:</p>
+              <ul>
+                <li>JSON: <code>0.00</code> becomes <code>0</code></li>
+                <li>JSON: <code>0.0000001</code> becomes <code>1e-7</code></li>
+                <li>
+                  XML: leading and trailing whitespace will be <em>ignored</em>
+                </li>
+                <li>XML: empty nodes will be <em>self-closed</em></li>
+                <li>XML: internal DTDs in !DOCTYPE will be <em>ignored</em></li>
+              </ul>
+            </div>
+            <footer class="mt-2 text-center">
+              A project by
+              <a
+                class="focus:outline-none hover:underline text-yellow-600"
+                href="https://permortensen.com"
+              >
+                Per
+              </a>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="./js/app.js" type="module"></script>
+  </body>
+</html>

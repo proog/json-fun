@@ -1,6 +1,5 @@
 module.exports = {
-  purge: ["./public/index.html", "./src/**/*.{js,jsx}"],
-  darkMode: "media",
+  content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {
       colors: {
@@ -11,6 +10,5 @@ module.exports = {
       },
     },
   },
-  variants: {},
   plugins: [],
 };
