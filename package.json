@@ -3,12 +3,14 @@
   "version": "1.2.0",
   "description": "Fun with JSON",
   "private": true,
+  "type": "module",
   "dependencies": {
     "highlight.js": "^11.4.0",
     "parcel": "^2.2.1",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.2",
-    "tailwindcss": "^3.0.18"
+    "tailwindcss": "^3.0.18",
+    "uvu": "^0.5.3"
   },
   "devDependencies": {
     "prettier": "^2.5.1",
@@ -19,7 +21,8 @@
     "build": "parcel build --no-cache src/index.html",
     "prestart": "npm run clean",
     "prebuild": "npm run clean",
-    "clean": "rimraf ./dist"
+    "clean": "rimraf ./dist",
+    "test": "uvu"
   },
   "browserslist": {
     "production": [
