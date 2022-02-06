@@ -1,3 +1,8 @@
+import XmlFormatter from "./XmlFormatter";
+
+const xmlParser = new DOMParser();
+const xmlFormatter = new XmlFormatter();
+
 export function formatInput(input) {
   const trimmed = input.trim();
 
