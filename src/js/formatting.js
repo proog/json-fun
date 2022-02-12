@@ -1,7 +1,9 @@
+import JsonCompleter from "./JsonCompleter";
 import XmlFormatter from "./XmlFormatter";
 
 const xmlParser = new DOMParser();
 const xmlFormatter = new XmlFormatter();
+const jsonCompleter = new JsonCompleter();
 
 export function formatInput(input) {
   const trimmed = input.trim();
@@ -11,27 +13,45 @@ export function formatInput(input) {
       hasError: false,
       formatted: "",
       language: "json",
+      completed: false,
     };
   }
 
   return trimmed.startsWith("<")
-    ? { ...formatXml(input), language: "xml" }
-    : { ...formatJson(input), language: "json" };
+    ? { language: "xml", completed: false, ...formatXml(input) }
+    : { language: "json", completed: false, ...formatJson(input) };
 }
 
 function formatJson(input) {
   try {
-    const parsed = JSON.parse(input);
+    const { parsed, completed } = parseJson(input);
 
     return {
       hasError: false,
       formatted: JSON.stringify(parsed, null, "  "),
+      completed,
     };
   } catch (e) {
     return {
       hasError: true,
       formatted: formatJsonError(e.toString(), input),
     };
+  }
+}
+
+function parseJson(input) {
+  try {
+    const parsed = JSON.parse(input);
+    return { parsed, completed: false };
+  } catch (originalParseError) {
+    const completed = jsonCompleter.complete(input);
+
+    try {
+      const parsed = JSON.parse(completed);
+      return { parsed, completed: true };
+    } catch (completedParseError) {
+      throw originalParseError;
+    }
   }
 }
 

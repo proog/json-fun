@@ -29,6 +29,9 @@ const elements = {
   formattedLength: document.querySelector("#formattedLength"),
   copyButton: document.querySelector("#copyButton"),
   copyDescription: document.querySelector("#copyDescription"),
+  explainAutocompleteButton: document.querySelector(
+    "#explainAutocompleteButton"
+  ),
 };
 
 const manualInput = new Subject();
@@ -60,7 +63,7 @@ const formatted$ = input$.pipe(
     elements.inputLength.textContent = `${input.length}`;
   }),
   map((input) => formatInput(input)),
-  tap(({ hasError, formatted, language }) => {
+  tap(({ hasError, formatted, language, completed }) => {
     elements.formattedOutput.innerHTML = hasError
       ? formatted
       : highlight(formatted, language);
@@ -69,6 +72,9 @@ const formatted$ = input$.pipe(
     elements.inputTextarea.classList.toggle("focus:ring-red-500", hasError);
     elements.inputTextarea.classList.toggle("border-gray-500", !hasError);
     elements.inputTextarea.classList.toggle("focus:ring-gray-500", !hasError);
+    elements.explainAutocompleteButton.style.display = completed
+      ? null
+      : "none";
   }),
   share()
 );
@@ -86,8 +92,22 @@ const copyFormatted$ = fromEvent(elements.copyButton, "click").pipe(
   })
 );
 
+const explainAutocomplete$ = fromEvent(
+  elements.explainAutocompleteButton,
+  "click"
+).pipe(
+  tap(() => {
+    alert(
+      "It looks like the JSON input was invalid (not parseable).\n\n" +
+        "This is most commonly caused by truncation, such as when copying from a database column that does not have the sufficient length to store the complete JSON structure.\n\n" +
+        "An attempt was made to complete the input by inserting the necessary JSON tokens."
+    );
+  })
+);
+
 view$.subscribe();
 formatted$.subscribe();
 copyFormatted$.subscribe();
+explainAutocomplete$.subscribe();
 
 manualInput.next(loadInputFromStorage());
