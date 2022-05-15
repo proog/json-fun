@@ -16,6 +16,7 @@ import { formatInput } from "./formatting";
 import { highlight } from "./highlighting";
 import { loadInputFromStorage, saveInputToStorage } from "./storage";
 import { fadeIn, fadeOut } from "./transitions";
+import { loadInputFromUrl, saveInputToUrl } from "./url";
 
 const views = {
   jsonInfo: document.querySelector("#jsonInfo"),
@@ -59,6 +60,7 @@ const view$ = input$.pipe(
 
 const formatted$ = input$.pipe(
   tap((input) => {
+    saveInputToUrl(input);
     saveInputToStorage(input);
     elements.inputLength.textContent = `${input.length}`;
   }),
@@ -110,4 +112,4 @@ formatted$.subscribe();
 copyFormatted$.subscribe();
 explainAutocomplete$.subscribe();
 
-manualInput.next(loadInputFromStorage());
+manualInput.next(loadInputFromUrl() || loadInputFromStorage());
