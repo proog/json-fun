@@ -32,6 +32,9 @@ const elements = {
   explainAutocompleteButton: document.querySelector<HTMLButtonElement>(
     "#explainAutocompleteButton"
   )!,
+  explainDecodeButton: document.querySelector<HTMLButtonElement>(
+    "#explainDecodeButton"
+  )!,
 };
 
 const manualInput = new Subject<string>();
@@ -46,7 +49,13 @@ const input$ = merge(
     map((event) => (event.target as HTMLTextAreaElement).value),
     debounceTime(200)
   )
-).pipe(share());
+).pipe(
+  tap((input) => {
+    saveInputToStorage(input);
+    elements.inputLength.textContent = `${input.length}`;
+  }),
+  share()
+);
 
 const view$ = input$.pipe(
   map((value) => !!value),
@@ -58,12 +67,8 @@ const view$ = input$.pipe(
 );
 
 const formatted$ = input$.pipe(
-  tap((input) => {
-    saveInputToStorage(input);
-    elements.inputLength.textContent = `${input.length}`;
-  }),
   map((input) => formatInput(input)),
-  tap(({ hasError, formatted, language, completed }) => {
+  tap(({ hasError, formatted, language, completed, decoded }) => {
     elements.formattedOutput.innerHTML = hasError
       ? formatted
       : highlight(formatted, language);
@@ -73,6 +78,7 @@ const formatted$ = input$.pipe(
     elements.inputTextarea.classList.toggle("border-gray-500", !hasError);
     elements.inputTextarea.classList.toggle("focus:ring-gray-500", !hasError);
     elements.explainAutocompleteButton.style.display = completed ? "" : "none";
+    elements.explainDecodeButton.style.display = decoded ? "" : "none";
   }),
   share()
 );
@@ -100,6 +106,16 @@ const explainAutocomplete$ = fromEvent(
         "This is most commonly caused by truncation, such as when copying from a database column that does not have the sufficient length to store the complete JSON structure.\n\n" +
         "An attempt was made to complete the input by inserting the necessary JSON tokens."
     );
+    elements.inputTextarea.focus();
+  })
+);
+
+const explainDecode$ = fromEvent(elements.explainDecodeButton, "click").pipe(
+  tap(() => {
+    alert(
+      "The input was interpreted as a Base64 encoded string and was automatically decoded."
+    );
+    elements.inputTextarea.focus();
   })
 );
 
@@ -107,5 +123,6 @@ view$.subscribe();
 formatted$.subscribe();
 copyFormatted$.subscribe();
 explainAutocomplete$.subscribe();
+explainDecode$.subscribe();
 
 manualInput.next(loadInputFromStorage());

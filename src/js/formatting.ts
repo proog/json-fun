@@ -1,19 +1,23 @@
+import Base64Decoder from "./Base64Decoder";
 import JsonCompleter from "./JsonCompleter";
 import XmlFormatter from "./XmlFormatter";
 
 const xmlParser = new DOMParser();
 const xmlFormatter = new XmlFormatter();
 const jsonCompleter = new JsonCompleter();
+const base64Decoder = new Base64Decoder();
 
 type FormatResult = {
   hasError: boolean;
   formatted: string;
   language: "json" | "xml";
   completed: boolean;
+  decoded: boolean;
 };
 
 export function formatInput(input: string): FormatResult {
   const trimmed = input.trim();
+  let decoded = false;
 
   if (trimmed === "") {
     return {
@@ -21,12 +25,18 @@ export function formatInput(input: string): FormatResult {
       formatted: "",
       language: "json",
       completed: false,
+      decoded,
     };
   }
 
+  if (base64Decoder.isBase64(trimmed)) {
+    input = base64Decoder.decode(trimmed);
+    decoded = true;
+  }
+
   return trimmed.startsWith("<")
-    ? { language: "xml", completed: false, ...formatXml(input) }
-    : { language: "json", completed: false, ...formatJson(input) };
+    ? { language: "xml", completed: false, decoded, ...formatXml(input) }
+    : { language: "json", completed: false, decoded, ...formatJson(input) };
 }
 
 function formatJson(input: string) {

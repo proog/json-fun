@@ -18,6 +18,12 @@
   }
 }
 
+@layer components {
+  .text-button {
+    @apply cursor-pointer whitespace-nowrap text-yellow-600 hover:underline focus:outline-none focus:ring;
+  }
+}
+
 .fade {
   transition: opacity 0.3s ease;
 }
