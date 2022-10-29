@@ -5,16 +5,18 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "highlight.js": "^11.4.0",
-    "parcel": "^2.2.1",
+    "highlight.js": "^11.6.0",
+    "parcel": "^2.7.0",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.5.2",
-    "tailwindcss": "^3.0.18",
-    "uvu": "^0.5.3"
+    "rxjs": "^7.5.7",
+    "tailwindcss": "^3.2.1",
+    "uvu": "^0.5.6"
   },
   "devDependencies": {
-    "prettier": "^2.5.1",
-    "prettier-plugin-tailwindcss": "^0.1.5"
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.18",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13"
   },
   "scripts": {
     "start": "parcel serve src/index.html",
