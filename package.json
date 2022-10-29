@@ -10,6 +10,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.7",
     "tailwindcss": "^3.2.1",
+    "typescript": "^4.8.4",
     "uvu": "^0.5.6"
   },
   "devDependencies": {
@@ -19,12 +20,12 @@
     "prettier-plugin-tailwindcss": "^0.1.13"
   },
   "scripts": {
-    "start": "parcel serve src/index.html",
-    "build": "parcel build --no-cache src/index.html",
+    "start": "tsc && parcel serve src/index.html",
+    "build": "tsc && parcel build --no-cache src/index.html",
     "prestart": "npm run clean",
     "prebuild": "npm run clean",
     "clean": "rimraf ./dist",
-    "test": "uvu"
+    "test": "tsc && uvu"
   },
   "browserslist": {
     "production": [

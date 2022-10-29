@@ -5,6 +5,6 @@ import hlxml from "highlight.js/lib/languages/xml";
 hljs.registerLanguage("json", hljson);
 hljs.registerLanguage("xml", hlxml);
 
-export function highlight(formatted, language) {
+export function highlight(formatted: string, language: "json" | "xml") {
   return hljs.highlight(formatted, { language }).value;
 }

@@ -5,7 +5,14 @@ const xmlParser = new DOMParser();
 const xmlFormatter = new XmlFormatter();
 const jsonCompleter = new JsonCompleter();
 
-export function formatInput(input) {
+type FormatResult = {
+  hasError: boolean;
+  formatted: string;
+  language: "json" | "xml";
+  completed: boolean;
+};
+
+export function formatInput(input: string): FormatResult {
   const trimmed = input.trim();
 
   if (trimmed === "") {
@@ -22,7 +29,7 @@ export function formatInput(input) {
     : { language: "json", completed: false, ...formatJson(input) };
 }
 
-function formatJson(input) {
+function formatJson(input: string) {
   try {
     const { parsed, completed } = parseJson(input);
 
@@ -34,12 +41,12 @@ function formatJson(input) {
   } catch (e) {
     return {
       hasError: true,
-      formatted: formatJsonError(e.toString(), input),
+      formatted: formatJsonError((e as Error).toString(), input),
     };
   }
 }
 
-function parseJson(input) {
+function parseJson(input: string) {
   try {
     const parsed = JSON.parse(input);
     return { parsed, completed: false };
@@ -55,7 +62,7 @@ function parseJson(input) {
   }
 }
 
-function formatXml(input) {
+function formatXml(input: string) {
   const parsed = xmlParser.parseFromString(input, "application/xml");
 
   if (parsed.getElementsByTagName("parsererror").length) {
@@ -71,7 +78,7 @@ function formatXml(input) {
   };
 }
 
-function formatJsonError(error, input) {
+function formatJsonError(error: string, input: string) {
   let match = /SyntaxError: [\s\S]* at position (\d+)/.exec(error); // \s\S = dot + newline
 
   if (!match || match.length !== 2) return error;

@@ -18,23 +18,23 @@ import { loadInputFromStorage, saveInputToStorage } from "./storage";
 import { fadeIn, fadeOut } from "./transitions";
 
 const views = {
-  jsonInfo: document.querySelector("#jsonInfo"),
-  formattedOutput: document.querySelector("#formattedOutput"),
+  jsonInfo: document.querySelector<HTMLElement>("#jsonInfo")!,
+  formattedOutput: document.querySelector<HTMLElement>("#formattedOutput")!,
 };
 
 const elements = {
-  inputTextarea: document.querySelector("textarea"),
-  inputLength: document.querySelector("#inputLength"),
-  formattedOutput: document.querySelector("pre code"),
-  formattedLength: document.querySelector("#formattedLength"),
-  copyButton: document.querySelector("#copyButton"),
-  copyDescription: document.querySelector("#copyDescription"),
-  explainAutocompleteButton: document.querySelector(
+  inputTextarea: document.querySelector("textarea")!,
+  inputLength: document.querySelector<HTMLElement>("#inputLength")!,
+  formattedOutput: document.querySelector<HTMLElement>("pre code")!,
+  formattedLength: document.querySelector<HTMLElement>("#formattedLength")!,
+  copyButton: document.querySelector<HTMLButtonElement>("#copyButton")!,
+  copyDescription: document.querySelector<HTMLElement>("#copyDescription")!,
+  explainAutocompleteButton: document.querySelector<HTMLButtonElement>(
     "#explainAutocompleteButton"
-  ),
+  )!,
 };
 
-const manualInput = new Subject();
+const manualInput = new Subject<string>();
 
 const input$ = merge(
   manualInput.pipe(
@@ -43,7 +43,7 @@ const input$ = merge(
     })
   ),
   fromEvent(elements.inputTextarea, "input").pipe(
-    map((event) => event.target.value),
+    map((event) => (event.target as HTMLTextAreaElement).value),
     debounceTime(200)
   )
 ).pipe(share());
@@ -72,9 +72,7 @@ const formatted$ = input$.pipe(
     elements.inputTextarea.classList.toggle("focus:ring-red-500", hasError);
     elements.inputTextarea.classList.toggle("border-gray-500", !hasError);
     elements.inputTextarea.classList.toggle("focus:ring-gray-500", !hasError);
-    elements.explainAutocompleteButton.style.display = completed
-      ? null
-      : "none";
+    elements.explainAutocompleteButton.style.display = completed ? "" : "none";
   }),
   share()
 );

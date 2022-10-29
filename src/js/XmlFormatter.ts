@@ -1,12 +1,7 @@
 export default class XmlFormatter {
-  constructor(step = 2) {
-    this.step = step;
-  }
+  constructor(private readonly step = 2) {}
 
-  /**
-   * @param {Document} document
-   */
-  format(document) {
+  format(document: Document) {
     const declaration = this.formatDeclaration(document);
     const doctype = this.formatDoctype(document);
     const nodes = this.formatNode(document.documentElement, 0);
@@ -14,27 +9,19 @@ export default class XmlFormatter {
     return declaration + doctype + nodes;
   }
 
-  /**
-   * @param {Node} node
-   * @param {number} indent
-   */
-  formatNode(node, indent) {
+  private formatNode(node: Node, indent: number) {
     const spaces = " ".repeat(indent);
 
     if (node instanceof Text)
-      return spaces + this.escape(node.nodeValue).trim() + "\n";
+      return spaces + this.escape(node.nodeValue || "").trim() + "\n";
 
     if (node instanceof Comment)
-      return spaces + `<!-- ${this.escape(node.nodeValue).trim()} -->\n`;
+      return spaces + `<!-- ${this.escape(node.nodeValue || "").trim()} -->\n`;
 
-    return this.formatElementNode(node, indent);
+    return this.formatElementNode(node as Element, indent);
   }
 
-  /**
-   * @param {Element} node
-   * @param {number} indent
-   */
-  formatElementNode(node, indent) {
+  private formatElementNode(node: Element, indent: number) {
     const spaces = " ".repeat(indent);
 
     let str = spaces + "<" + node.nodeName;
@@ -51,7 +38,7 @@ export default class XmlFormatter {
       node.childNodes.length === 1 &&
       node.childNodes.item(0) instanceof Text
     ) {
-      childrenStr = this.escape(node.childNodes.item(0).nodeValue).trim();
+      childrenStr = this.escape(node.childNodes.item(0).nodeValue || "").trim();
       compactText = true;
     } else {
       for (let child of node.childNodes) {
@@ -70,14 +57,12 @@ export default class XmlFormatter {
     return str + ">\n" + childrenStr + spaces + `</${node.nodeName}>\n`;
   }
 
-  /**
-   * @param {Document} doc
-   */
-  formatDeclaration(doc) {
+  private formatDeclaration(doc: Document) {
     // don't print a declaration if it's not important
-    const version = doc.xmlVersion || "1.0";
-    const encoding = doc.xmlEncoding || doc.inputEncoding || "utf-8";
-    const standalone = doc.xmlStandalone;
+    const version: string = (doc as any).xmlVersion || "1.0";
+    const encoding: string =
+      (doc as any).xmlEncoding || doc.characterSet || "utf-8";
+    const standalone = (doc as any).xmlStandalone;
 
     if (version === "1.0" && encoding.toLowerCase() === "utf-8" && !standalone)
       return "";
@@ -93,10 +78,7 @@ export default class XmlFormatter {
     return declaration;
   }
 
-  /**
-   * @param {Document} document
-   */
-  formatDoctype(document) {
+  private formatDoctype(document: Document) {
     if (!document.doctype) return "";
 
     const doctype = document.doctype;
@@ -111,17 +93,11 @@ export default class XmlFormatter {
     return str;
   }
 
-  /**
-   * @param {string} str
-   */
-  escapeAttribute(str) {
+  private escapeAttribute(str: string) {
     return this.escape(str).replace(/"/g, "&quot;").replace(/'/g, "&apos;");
   }
 
-  /**
-   * @param {string} str
-   */
-  escape(str) {
+  private escape(str: string) {
     return str
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")

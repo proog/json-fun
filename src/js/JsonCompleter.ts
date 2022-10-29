@@ -1,39 +1,46 @@
-const OBJECT = 1;
-const ARRAY = 2;
-const STRING = 3;
-const KEY = 4;
-const OBJECT_VALUE = 5;
+enum Token {
+  Object,
+  Array,
+  String,
+  Key,
+  ObjectValue,
+}
 
 export default class JsonCompleter {
-  complete(input) {
+  private stack: Token[] = [];
+
+  complete(input: string) {
     this.stack = [];
 
-    let previousChar = undefined;
+    let previousChar: string | undefined = undefined;
 
     for (const char of input) {
-      this.#handleCharacter(char, previousChar);
+      this.handleCharacter(char, previousChar);
       previousChar = char;
     }
 
-    return input + this.#getCompletion();
+    return input + this.getCompletion();
   }
 
-  #handleCharacter(char, previousChar) {
+  private handleCharacter(char: string, previousChar?: string) {
     const lastToken = this.stack.at(-1);
 
     // Bail out early if inside string or key
-    if (char !== '"' && (lastToken === STRING || lastToken === KEY)) {
+    if (
+      char !== '"' &&
+      (lastToken === Token.String || lastToken === Token.Key)
+    ) {
       return;
     }
 
     switch (char) {
       case "{":
-        if (lastToken === OBJECT_VALUE) this.stack.pop();
-        this.stack.push(OBJECT);
+        if (lastToken === Token.ObjectValue) this.stack.pop();
+        this.stack.push(Token.Object);
         break;
       case "[":
-        if (lastToken === OBJECT_VALUE) this.stack.pop();
-        this.stack.push(ARRAY);
+        if (lastToken === Token.ObjectValue) this.stack.pop();
+        this.stack.push(Token.Array);
         break;
       case "}":
         this.stack.pop();
@@ -42,53 +49,53 @@ export default class JsonCompleter {
         this.stack.pop();
         break;
       case ":":
-        this.stack.push(OBJECT_VALUE);
+        this.stack.push(Token.ObjectValue);
         break;
       case '"':
         switch (lastToken) {
-          case OBJECT:
-            this.stack.push(KEY);
+          case Token.Object:
+            this.stack.push(Token.Key);
             break;
-          case KEY:
-          case STRING:
+          case Token.Key:
+          case Token.String:
             if (previousChar !== "\\") {
               this.stack.pop();
             }
             break;
           default:
-            if (lastToken === OBJECT_VALUE) this.stack.pop();
-            this.stack.push(STRING);
+            if (lastToken === Token.ObjectValue) this.stack.pop();
+            this.stack.push(Token.String);
             break;
         }
         break;
       default:
         // Assume any non-whitespace values will replace an unfinished object value
-        if (lastToken === OBJECT_VALUE && /\S/.test(char)) {
+        if (lastToken === Token.ObjectValue && /\S/.test(char)) {
           this.stack.pop();
         }
     }
   }
 
-  #getCompletion() {
+  private getCompletion() {
     let completion = "";
 
     for (let i = this.stack.length - 1; i >= 0; i--) {
       const token = this.stack[i];
 
       switch (token) {
-        case OBJECT:
+        case Token.Object:
           completion += "}";
           break;
-        case ARRAY:
+        case Token.Array:
           completion += "]";
           break;
-        case STRING:
+        case Token.String:
           completion += '"';
           break;
-        case KEY:
+        case Token.Key:
           completion += '":0';
           break;
-        case OBJECT_VALUE:
+        case Token.ObjectValue:
           completion += "0";
           break;
         default:

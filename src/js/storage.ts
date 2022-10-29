@@ -8,7 +8,7 @@ export function loadInputFromStorage() {
   }
 }
 
-export function saveInputToStorage(input) {
+export function saveInputToStorage(input: string) {
   try {
     sessionStorage.setItem(storageKey, input);
   } catch (err) {}
