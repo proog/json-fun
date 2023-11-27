@@ -11,7 +11,6 @@ export type ParseResult = {
   language: "json" | "xml";
   completed: boolean;
   decoded: boolean;
-  input: string;
 };
 
 export function parse(input: string): ParseResult {
@@ -25,7 +24,6 @@ export function parse(input: string): ParseResult {
       language: "json",
       completed: false,
       decoded,
-      input,
     };
   }
 
@@ -35,8 +33,8 @@ export function parse(input: string): ParseResult {
   }
 
   return trimmed.startsWith("<")
-    ? { input, language: "xml", completed: false, decoded, ...parseXml(input) }
-    : { input, language: "json", decoded, ...parseJson(input) };
+    ? { language: "xml", completed: false, decoded, ...parseXml(input) }
+    : { language: "json", decoded, ...parseJson(input) };
 }
 
 function parseJson(input: string) {
