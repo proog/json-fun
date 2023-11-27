@@ -34,7 +34,21 @@ export function parse(input: string): ParseResult {
 
   return trimmed.startsWith("<")
     ? { language: "xml", completed: false, decoded, ...parseXml(input) }
-    : { language: "json", decoded, ...parseJson(input) };
+    : { language: "json", decoded, ...trimAndParseJson(input) };
+}
+
+function trimAndParseJson(input: string) {
+  const parseResult = parseJson(input);
+
+  if (parseResult.hasError) {
+    const firstObjectOrArray = input.match(/^.*?([\{\[].*)$/);
+
+    if (firstObjectOrArray) {
+      return parseJson(firstObjectOrArray[1]);
+    }
+  }
+
+  return parseResult;
 }
 
 function parseJson(input: string) {
