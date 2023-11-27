@@ -1,13 +1,9 @@
-import Base64Decoder from "./Base64Decoder";
-import JsonCompleter from "./JsonCompleter";
 import XmlFormatter from "./XmlFormatter";
+import { ParseResult } from "./parsing";
 
-const xmlParser = new DOMParser();
 const xmlFormatter = new XmlFormatter();
-const jsonCompleter = new JsonCompleter();
-const base64Decoder = new Base64Decoder();
 
-type FormatResult = {
+export type FormatResult = {
   hasError: boolean;
   formatted: string;
   language: "json" | "xml";
@@ -15,77 +11,27 @@ type FormatResult = {
   decoded: boolean;
 };
 
-export function formatInput(input: string): FormatResult {
-  const trimmed = input.trim();
-  let decoded = false;
+export function format(parseResult: ParseResult): FormatResult {
+  const { hasError, parsed, completed, decoded, language, input } = parseResult;
 
-  if (trimmed === "") {
-    return {
-      hasError: false,
-      formatted: "",
-      language: "json",
-      completed: false,
-      decoded,
-    };
-  }
+  const formatted =
+    language === "xml"
+      ? formatXml(parsed as Document)
+      : formatJson(parsed, input);
 
-  if (base64Decoder.isBase64(trimmed)) {
-    input = base64Decoder.decode(trimmed);
-    decoded = true;
-  }
-
-  return trimmed.startsWith("<")
-    ? { language: "xml", completed: false, decoded, ...formatXml(input) }
-    : { language: "json", completed: false, decoded, ...formatJson(input) };
+  return { hasError, language, completed, decoded, formatted };
 }
 
-function formatJson(input: string) {
-  try {
-    const { parsed, completed } = parseJson(input);
-
-    return {
-      hasError: false,
-      formatted: JSON.stringify(parsed, null, "  "),
-      completed,
-    };
-  } catch (e) {
-    return {
-      hasError: true,
-      formatted: formatJsonError((e as Error).toString(), input),
-    };
-  }
+function formatJson(parsed: any | Error, input: string) {
+  return parsed instanceof Error
+    ? formatJsonError(parsed.toString(), input)
+    : JSON.stringify(parsed, null, "  ");
 }
 
-function parseJson(input: string) {
-  try {
-    const parsed = JSON.parse(input);
-    return { parsed, completed: false };
-  } catch (originalParseError) {
-    const completed = jsonCompleter.complete(input);
-
-    try {
-      const parsed = JSON.parse(completed);
-      return { parsed, completed: true };
-    } catch (completedParseError) {
-      throw originalParseError;
-    }
-  }
-}
-
-function formatXml(input: string) {
-  const parsed = xmlParser.parseFromString(input, "application/xml");
-
-  if (parsed.getElementsByTagName("parsererror").length) {
-    return {
-      hasError: true,
-      formatted: "Error parsing XML string :'(",
-    };
-  }
-
-  return {
-    hasError: false,
-    formatted: xmlFormatter.format(parsed),
-  };
+function formatXml(parsed: Document) {
+  return parsed.getElementsByTagName("parsererror").length
+    ? "Error parsing XML string :'("
+    : xmlFormatter.format(parsed);
 }
 
 function formatJsonError(error: string, input: string) {

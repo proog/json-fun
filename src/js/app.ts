@@ -12,8 +12,9 @@ import {
   tap,
   withLatestFrom,
 } from "rxjs";
-import { formatInput } from "./formatting";
+import { format } from "./formatting";
 import { highlight } from "./highlighting";
+import { parse } from "./parsing";
 import { loadInputFromStorage, saveInputToStorage } from "./storage";
 import { fadeIn, fadeOut } from "./transitions";
 
@@ -67,7 +68,8 @@ const view$ = input$.pipe(
 );
 
 const formatted$ = input$.pipe(
-  map((input) => formatInput(input)),
+  map(parse),
+  map(format),
   tap(({ hasError, formatted, language, completed, decoded }) => {
     elements.formattedOutput.innerHTML = hasError
       ? formatted
