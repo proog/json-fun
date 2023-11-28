@@ -8,6 +8,10 @@ export type FormatResult = ParseResult & { formatted: string };
 export function format(parseResult: ParseResult): FormatResult {
   const { language, parsed } = parseResult;
 
+  if (parsed === undefined) {
+    return { ...parseResult, formatted: "" };
+  }
+
   const formatted =
     language === "xml" ? formatXml(parsed as Document) : formatJson(parsed);
 

@@ -7,7 +7,7 @@ const base64Decoder = new Base64Decoder();
 
 export type ParseResult = {
   hasError: boolean;
-  parsed: any | Document | Error;
+  parsed: undefined | unknown | Document | Error;
   language: "json" | "xml";
   completed: boolean;
   decoded: boolean;
