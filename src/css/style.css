@@ -1,10 +1,19 @@
-@import "../../node_modules/highlight.js/styles/atom-one-light.css";
-@import "../../node_modules/highlight.js/styles/atom-one-dark.css" screen and
-  (prefers-color-scheme: dark);
+@import "../../node_modules/highlight.js/styles/atom-one-light.css" layer(base);
+@import "../../node_modules/highlight.js/styles/atom-one-dark.css" layer(base)
+  screen and (prefers-color-scheme: dark);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-atom-light: #fafafa;
+  --color-atom-dark: #282c34;
+  --color-atom-light-dimmed: #f0f0f0;
+  --color-atom-dark-dimmed: #1d2026;
+}
+
+@utility text-button {
+  @apply cursor-pointer whitespace-nowrap text-yellow-600 hover:underline focus:outline-hidden focus:ring-3;
+}
 
 @layer base {
   h1 {
@@ -15,12 +24,6 @@
   }
   ul {
     @apply list-disc pl-8;
-  }
-}
-
-@layer components {
-  .text-button {
-    @apply cursor-pointer whitespace-nowrap text-yellow-600 hover:underline focus:outline-none focus:ring;
   }
 }
 
